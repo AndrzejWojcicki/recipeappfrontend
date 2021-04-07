@@ -1,0 +1,127 @@
+<div class="container" *ngIf="currentUser; else loggedOut">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-10 center">
+
+
+        <br />
+        <div *ngIf="ingredients.length > 0; else noIgredients">
+          <form *ngIf="!isSucceded" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+
+
+
+            <div class="form-group">
+              <label for="productName">Nazwa produktu</label>
+              <select class="form-control" [(ngModel)]="form.productName" name="productName" required
+                #productName="ngModel">
+                <option *ngFor="let ingr of ingredients" [value]="ingr.id">{{ ingr.productName }}</option>
+              </select>
+              <div class="alert-danger" role="alert" *ngIf="f.submitted && productName.invalid">
+                <div *ngIf="productName.errors.required">
+                  Musisz wybrać jakiś produkt!
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="unit">Jednostka</label>
+              <br>
+              <small>
+                <a routerLink="/FAQ-jednostki">
+                  (Tabela zamiany jednostki na gramy)
+                </a>
+            </small>
+              <select class="form-control" [(ngModel)]="form.unit" name="unit" required
+                #unit="ngModel">
+                <option *ngFor="let unit of units" [value]="unit">{{ unit }}</option>
+              </select>
+              <div class="alert-danger" role="alert" *ngIf="f.submitted && unit.invalid">
+                <div *ngIf="unit.errors.required">
+                  Musisz wybrać jednostkę
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="amount">Ilość</label> <br>
+              <small></small>
+              <input type="number" step ="0.01" min="0" class="form-control" pattern="^\d*(\.\d(\d)?)?$"  name="amount" [(ngModel)]="form.amount" required
+                #amount="ngModel" />
+              <div class="alert-danger" role="alert" *ngIf="f.submitted && amount.invalid">
+                <div *ngIf="amount.errors.required">
+                  Musisz podać ilość produktu
+                </div>
+                <div *ngIf="amount.errors.pattern">
+                  Zły format danych
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <div class="form-group">
+                <button class="btn btn-primary btn-block">Dodaj składnik</button>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-center text-center">
+              <small  ><a (click)="addIngredientToDatabase()">
+                  Brak produktu, którego szukasz? Dodaj go do naszej bazy !
+                </a></small>
+            </div>
+
+            <div class="alert alert-warning text-center" role="alert" *ngIf="f.submitted && isFailed">
+              Dodawanie nie powiodło się. Sprawdź czy podałeś prawidłowe dane.<br />{{ errorMessage }}
+              <div class="d-flex justify-content-center">
+                <button (click)="returnToDiet()" class="btn btn-secondary btn-sm">
+                  Powrót
+                </button>
+              </div>
+            </div>
+
+          </form>
+          <div *ngIf="isSucceded">
+            <div class="alert alert-success text-center">
+              Dodawanie powiodło się!
+            </div>
+            <div class="d-flex justify-content-center">
+              <button (click)="returnToDiet()" class="btn btn-secondary btn-sm">
+                Powrót
+              </button>
+            </div>
+            <br>
+            <div class="d-flex justify-content-center">
+              <button (click)="returnToAdding()" class="btn btn-secondary btn-sm">
+                Dodaj kolejny składnik
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+        <ng-template #noIgredients>
+          <div class="card">
+            <br>
+            <div>
+              <p class="text-center">Brak wyników</p>
+              <br>
+              <div class="d-flex justify-content-center">
+                <button (click)="addIngredientToDatabase()" class="btn btn-success btn-sm">
+                  Dodaj produkt do bazy
+                </button>
+              </div>
+              <br>
+              <div class="d-flex justify-content-center">
+                <button (click)="returnToDiet()" class="btn btn-secondary btn-sm">
+                  Wróć do bialnsu
+                </button>
+              </div>
+            </div>
+            <br>
+          </div>
+        </ng-template>
+
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+<ng-template #loggedOut> Zaloguj się !</ng-template>

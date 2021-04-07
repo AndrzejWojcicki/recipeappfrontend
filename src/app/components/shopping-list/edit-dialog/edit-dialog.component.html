@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-3"></div>
+  <div class="col-6">
+    <div class="card card-container align-items-center">
+<form *ngIf="!isSucceded" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+  <div class="form-group">
+    <br />
+    <label for="name">Nazwa produktu</label>
+    <input type="text" class="form-control" name="name" [(ngModel)]="form.name" required minlength="3"
+      #name="ngModel" />
+    <div class="alert-danger" role="alert" *ngIf="f.submitted && name.invalid">
+      <div *ngIf="name.errors.required">
+        Musisz podać nazwę produktu
+      </div>
+      <div *ngIf="name.errors.minlength">
+        Nazwa produktu musi posiadać przynajmniej 3 znaki
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="quantity">Ilość</label> <br>
+    <input type="number" step ="1" min="1" class="form-control" pattern="^\d+$" name="quantity" [(ngModel)]="form.quantity" required
+      #quantity="ngModel" />
+    <div class="alert-danger" role="alert" *ngIf="f.submitted && quantity.invalid">
+      <div *ngIf="quantity.errors.required">
+        Musisz podać ilość
+      </div>
+      <div *ngIf="quantity.errors.pattern">
+        Zły format danych
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="additionalinfo">Uwagi</label>
+    <input type="text" class="form-control" name="additionalinfo" [(ngModel)]="form.additionalinfo"
+      #additionalinfo="ngModel" />
+  </div>
+
+
+  <div class="alert alert-warning text-center" role="alert" *ngIf="f.submitted && isFailed">
+    Dodawanie nie powiodło się. Sprawdź czy podałeś prawidłowe dane.<br />{{ errorMessage }}
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <div class="form-group">
+      <button class="btn btn-warning btn-block">Edytuj</button>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center">
+      <a type="button" class="btn btn-secondary mr-1" routerLink="/profil/lista-zakupow">
+         Wróć do listy zakupów
+      </a>
+  </div>
+  <br>
+
+</form>
+
+<div *ngIf="isSucceded">
+  <br>
+  <div class="alert alert-success text-center" style="margin: 0px;">
+    Dodawanie powiodło się!
+  </div>
+  <br>
+  <div class="d-flex justify-content-center">
+    <a type="button" class="btn btn-secondary mr-1" routerLink="/profil/lista-zakupow">
+       Wróć do listy zakupów
+    </a>
+</div>
+<br>
+</div>
+</div>
+<br>
+</div>
+<div class="col-3"></div>
+</div>

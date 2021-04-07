@@ -1,0 +1,113 @@
+  <div class="col-lg">
+    <div class="title">
+    </div>
+    <div class="card mt-4">
+      <div class="card-body">
+        <div class="row">
+          <div class="col text-center">
+            <h4>Bilans użytkownika:
+            </h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-center" *ngIf="!this.user.calories">
+            <p><a (click)="goToUserEdit()">Limity możesz ustawić w edycji użytkownika</a>
+            </p>
+          </div>
+        </div>
+          <br>
+          <div class="row">
+            <div class="col text-center">
+              <i class="fas fa-fire fa-2x"></i>
+              <div class="progress" *ngIf="this.procCalories < 100 && this.user.calories">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" [style.width]="this.procCalories + '%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{this.procCalories}}%</div>
+              </div>
+              <div class="progress" *ngIf="this.procCalories >= 100 && this.user.calories">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" [style.width]="this.procCalories + '%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{this.procCalories}}%</div>
+              </div>
+              <p>Kalorie: {{this.totalCalories}}<span *ngIf="this.user.calories" > /{{this.user.calories}}</span> kcal</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col text-center">
+              <i class="fas fa-drumstick-bite fa-lg"></i>
+              <div class="progress" *ngIf="this.procProteins < 100 && this.user.proteins">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" [style.width]="this.procProteins + '%'" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{this.procProteins}}%</div>
+              </div>
+              <div class="progress" *ngIf="this.procProteins >= 100 && this.user.proteins">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" [style.width]="this.procProteins + '%'" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{this.procProteins}}%</div>
+              </div>
+              <p>Białko: <span>{{this.totalProteins}} <span *ngIf="this.user.proteins">/{{this.user.proteins}}</span>g</span> </p>
+            </div>
+            <div class="col text-center">
+              <i class="fas fa-tint fa-lg"></i>
+              <div class="progress" *ngIf="this.procFat < 100 && this.user.fat">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" [style.width]="this.procFat + '%'" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{this.procFat}}%</div>
+              </div>
+              <div class="progress" *ngIf="this.procFat >= 100 && this.user.fat">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" [style.width]="this.procFat + '%'" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{this.procFat}}%</div>
+              </div>
+              <p>Tłuszcz: <span>{{this.totalFat}} <span *ngIf="this.user.fat">/{{this.user.fat}}</span>g</span> </p>
+            </div>
+            <div class="col text-center">
+              <i class="fas fa-seedling fa-lg"></i>
+              <div class="progress" *ngIf="this.procCarbs < 100 && this.user.carbohydrates">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" [style.width]="this.procCarbs + '%'" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{this.procCarbs}}%</div>
+              </div>
+              <div class="progress" *ngIf="this.procCarbs >= 100 && this.user.carbohydrates">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" [style.width]="this.procCarbs + '%'" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{this.procCarbs}}%</div>
+              </div>
+              <p>Węglowodany: <span>{{this.totalCarbs}} <span *ngIf="this.user.carbohydrates">/{{this.user.carbohydrates}}</span>g</span> </p>
+            </div>
+          </div>
+          <hr>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col text-center">
+            <h4>Produkty:
+            </h4>
+          </div>
+        </div>
+        <br>
+          <div class="d-flex justify-content-center">
+          <button class="btn btn-success btn-block" (click)="addToDiet()">Dodaj produkt <i class="fas fa-plus-circle"></i></button>
+          <button class="btn btn-danger btn-block" (click)="deleteAll()">Usuń wszystkie <i class="fas fa-eraser"></i></button>
+          </div>
+        <div class="card card-outline-secondary my-4 text-center" *ngFor="let diet of tempArray">
+          <div class="card-header">
+            <h5 style="text-align: center;">{{diet.ingredient.productName}}</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col text-center">
+                <i class="fas fa-balance-scale fa-2x"></i>
+                <p>Waga: {{toGrams(diet.diet)*diet.diet.amount}}g</p>
+              </div>
+              <div class="col text-center">
+                <i class="fas fa-fire fa-2x"></i>
+                <p>Kalorie: {{round(diet, 'kalorie')}} kcal</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-center">
+                <i class="fas fa-drumstick-bite fa-lg"></i>
+                <p>Białko: {{round(diet, 'bialko')}}g</p>
+              </div>
+              <div class="col text-center">
+                <i class="fas fa-tint fa-lg"></i>
+                <p>Tłuszcz: {{round(diet, 'tluszcz')}}g</p>
+              </div>
+              <div class="col text-center">
+                <i class="fas fa-seedling fa-lg"></i>
+                <p>Węglowodany: {{round(diet, 'wegle')}}g</p>
+              </div>
+            </div>
+                <button class="btn btn-danger btn-block" (click)="deleteUserDiet(diet.diet.id)">Usuń <i class="fas fa-trash"></i></button>
+                <button class="btn btn-warning btn-block" (click)="editUserDiet(diet.diet.id)">Edytuj <i class="fas fa-pen-square"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

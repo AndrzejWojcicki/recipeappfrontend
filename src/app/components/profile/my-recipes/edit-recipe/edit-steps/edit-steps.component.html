@@ -1,0 +1,67 @@
+<div class="container" *ngIf="currentUser; else loggedOut">
+  <div *ngIf="ownRecipe; else notAuthor">
+    <div *ngIf="!isSubmitted; else submitted">
+      <div class="row">
+        <div class="col"></div>
+        <div class="col-8">
+          <div class="form-group">
+            <form *ngIf="!isSucceded" name="description" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+              <textarea id="Value" name="Value" [(ngModel)]="newDescription.Value" class="form-control"
+                placeholder="Wprowadź Krok" id="itemDesc" rows="3" style="resize: none;"></textarea>
+            </form>
+            <br>
+            <button type="submit" (click)="addDescription()" [disabled]="isForUpdate === true"
+              class="btn btn-success mr-1">Dodaj</button>
+            <button type="submit" (click)="updateStep()" [disabled]="isForUpdate === false"
+              class="btn btn-warning">Zaktualizuj</button>
+          </div>
+          <hr>
+          <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" *ngIf="!isForUpdate">
+            <div *ngFor="let desc of descriptions;let i = index;" cdkDrag>
+                <div class="alert alert-info">
+                  <p>{{desc.Value}}
+                    <a (click)="deleteStep(i)"  style="float: right;">
+                    <i class="far fa-trash-alt"></i>
+                  </a>
+                  <a (click)="editStep(i)" style="float: right;padding-right: 8px;">
+                    <i class="fas fa-pencil-alt"></i>
+                  </a></p>
+
+              </div>
+            </div>
+          </div>
+            <div *ngIf="descriptions.length == 0" class="alert alert-info" style="text-align: center;">
+              Brak kroków!
+            </div>
+            <div class="d-flex justify-content-center">
+              <a class="btn btn-success" *ngIf="descriptions.length >= 1" (click)="onSubmit()">Zatwierdź kroki</a>
+            </div>
+
+            <br>
+            <hr>
+            <br>
+        </div>
+        <div class="col"></div>
+      </div>
+    </div>
+    <ng-template #submitted>
+      <div *ngIf="isSucceded">
+        <br>
+        <p class="text-center">Edycja powiodła się! </p>
+        <div class="d-flex justify-content-center">
+          <button (click)="returnToRecipe()" class="btn btn-secondary btn-sm">
+            Wróć do przepisu
+          </button>
+        </div>
+      </div>
+      <div *ngIf="isSubmitted && isFailed">
+        <br>
+        <div class="d-flex justify-content-center text-center">
+          <p>Edycja nie powiodła się. Spróbuj ponownie.<br />{{ errorMessage }}</p>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <ng-template #notAuthor> To nie twój przepis !</ng-template>
+</div>
+<ng-template #loggedOut> Zaloguj się !</ng-template>

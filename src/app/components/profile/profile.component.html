@@ -1,0 +1,32 @@
+<div class="container" *ngIf="currentUser; else loggedOut">
+  <header class="jumbotron">
+    <h3>
+      <strong>{{ currentUser.username }}</strong> Profil
+    </h3>
+  </header>
+  <p>
+    <strong>Nazwa użytkownika:</strong>
+    {{ user.userName }}
+  </p>
+  <p>
+    <strong>Email:</strong>
+    {{ user.email }}
+  </p>
+  <p>
+    <strong>Imię:</strong>
+    {{ user.firstName }}
+  </p>
+  <p>
+    <strong>Nazwisko:</strong>
+    {{ user.lastName }}
+  </p>
+  <button [routerLink]="'/profil/dodajprzepis'" type="button" class="btn btn-success mr-1">Dodaj przepis <i class="fas fa-plus-circle"></i></button>
+  <button [routerLink]="'/profil/mojeprzepisy'" type="button" class="btn btn-success mr-1">Moje przepisy <i class="fas fa-bread-slice"></i></button>
+  <a type="button" class="btn btn-success mr-1" routerLink="/profil/edit/{{ currentUser.id }}">
+    Edytuj dane użytkownika <i class="fas fa-user-edit"></i>
+  </a>
+  <button [routerLink]="'/profil/dieta'" type="button" class="btn btn-success mr-1">Bilans kaloryczny <i class="fas fa-balance-scale-left"></i></button>
+</div>
+<br>
+
+<ng-template #loggedOut> Zaloguj się !</ng-template>

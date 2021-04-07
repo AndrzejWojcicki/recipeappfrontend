@@ -1,0 +1,223 @@
+<div class="row">
+  <div class="col-lg-4">
+    <div class="fixed">
+      <h4 class="my-4">Składniki
+
+      </h4>
+      <div class="list-group" *ngFor="let ingredientAmount of ingredientsAmount; let i = index">
+        <ul class="list-group">
+          <div>
+            <li class="list-group-item">
+              <div class="row">
+                {{ ingredient[i]?.productName }} - <span>{{ ingredientAmount.amount }} {{ingredientAmount.unit}}</span>
+                <div *ngIf="authorofRecipe === username">
+                  &nbsp;
+                  <i class="fas fa-pencil-alt fa-sm" (click)="recipeIngredientUpdate(ingredientAmount.id)"
+                    type="button"></i>
+                </div>
+                <div *ngIf="authorofRecipe === username">
+                  &nbsp;
+                  <i class="fas fa-times close" (click)="recipeIngredientDelete(ingredientAmount.id)" type="button"></i>
+                </div>
+              </div>
+
+            </li>
+          </div>
+        </ul>
+      </div>
+      <div *ngIf="authorofRecipe === username">
+        <hr>
+        <button (click)="ingredientAdd()" type="button" class="btn btn-success mr-1">Dodaj składnik <i class="far fa-plus-square"></i></button>
+      </div>
+      <div *ngIf="username"><button (click)="ingredientToShoppingList()" type="button" class="btn btn-outline-success mr-1">Dodaj do listy zakupów <i class="fas fa-cart-plus"></i></button></div>
+      <div *ngIf="username"><button (click)="ingredientToDiet()" type="button" class="btn btn-outline-success mr-1">Dodaj do bilansu użytkownika <i class="fas fa-balance-scale-left"></i></button></div>
+      <hr>
+    </div>
+  </div>
+  <!-- /.col-lg-4 -->
+
+  <div class="col-lg-8">
+    <br />
+    <div class="title">
+      <h2 style="display: inline;">{{ recipe.name }} &nbsp;
+      </h2>
+        <i *ngIf="authorofRecipe === username"  class="fas fa-edit fa-lg"(click)="recipeDetailsEdit()" type="button"></i>
+    </div>
+    <br />
+    <small style="display: block;"class="text-muted" *ngIf="recipe.dateUpdated === null">Dodane przez {{ authorofRecipe }} dnia
+      {{ recipe.dateCreated | date: "mediumDate":"+0200":"pl" }}. Ilość ocen:
+      {{ ratings.length }}</small>
+    <small class="text-muted" *ngIf="recipe.dateCreated === null">Dodane przez {{ authorofRecipe }} ostatnio
+      zmodyfikowano dnia
+      {{ recipe.dateUpdated | date: "mediumDate":"+0200":"pl" }}. Ilość ocen:
+      {{ ratings.length }}</small>
+    <div class="card mt-4">
+      <img class="card-img-top img-fluid" src="{{ recipe.imageUrl }}" alt="" />
+      <div class="card-body">
+        <div class="row">
+          <div class="col text-center">
+            <i class="far fa-clock fa-lg"></i>
+            <p>{{ recipe.preparationTime }} min</p>
+          </div>
+          <div class="col text-center">
+            <div *ngIf="recipe.difficulty === 1">
+              <i class="fas fa-utensils fa-lg"></i>
+              <div>
+                <p>łatwe</p>
+              </div>
+            </div>
+            <div *ngIf="recipe.difficulty === 2">
+              <i class="fas fa-utensils fa-lg"></i>
+              <div>
+                <p>średnie</p>
+              </div>
+            </div>
+            <div *ngIf="recipe.difficulty === 3">
+              "<i class="fas fa-utensils fa-lg"></i>
+              <div>
+                <p>trudne</p>
+              </div>
+            </div>
+          </div>
+          <div class="col text-center">
+            <div *ngIf="0.5 > avgRatings">
+              <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i
+                class="far fa-star"></i><i class="far fa-star"></i>
+            </div>
+            <div *ngIf="0.5 < avgRatings && avgRatings < 1.5">
+              <i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i
+                class="far fa-star"></i><i class="far fa-star"></i>
+            </div>
+            <div *ngIf="1.5 <= avgRatings && avgRatings < 2.5">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i
+                class="far fa-star"></i><i class="far fa-star"></i>
+            </div>
+            <div *ngIf="2.5 <= avgRatings && avgRatings < 3.5">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                class="far fa-star"></i><i class="far fa-star"></i>
+            </div>
+            <div *ngIf="3.5 <= avgRatings && avgRatings < 4.5">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                class="fas fa-star"></i><i class="far fa-star"></i>
+            </div>
+            <div *ngIf="4.5 <= avgRatings">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+            <p>Śr. ocena ({{ avgRatings }})</p>
+          </div>
+        </div>
+        <div class="col text-center">
+          <h4>Cały przepis ma:
+          </h4>
+        </div>
+
+        <br>
+        <div class="row">
+          <div class="col text-center">
+            <i class="fas fa-fire fa-2x"></i>
+            <p>Kalorie: {{this.totalCalories}} kcal</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col text-center">
+            <i class="fas fa-drumstick-bite fa-lg"></i>
+            <p>Białko: {{this.totalProteins}}g</p>
+          </div>
+          <div class="col text-center">
+            <i class="fas fa-tint fa-lg"></i>
+            <p>Tłuszcz: {{this.totalFat}}g</p>
+          </div>
+          <div class="col text-center">
+            <i class="fas fa-seedling fa-lg"></i>
+            <p>Węglowodany: {{this.totalCarbs}}g</p>
+          </div>
+
+        </div>
+
+        <h4>Przygotowanie krok po kroku
+        </h4>
+        <div *ngIf="authorofRecipe === username && steps.length > 0">
+          <button (click)="stepAdd()" type="button" class="btn btn-success mr-1">Dodaj krok</button>
+          <button (click)="recipeStepsEdit()" type="button" class="btn btn-warning mr-1">Edytuj wszystkie kroki</button>
+        </div>
+        <div *ngIf="authorofRecipe === username && steps.length === 0">
+          <button (click)="stepsAdd()" type="button" class="btn btn-success mr-1">Dodaj kroki</button>
+        </div>
+
+        <hr />
+        <div class="container" *ngFor="let step of steps">
+          <div class="row">
+            <h5>Krok {{ step.stepNumber }} &nbsp;</h5>
+            <div *ngIf="authorofRecipe === username">
+              <i class="fas fa-pencil-alt fa-sm" (click)="recipeStepEdit(step.id)" type="button"></i>
+            </div>
+            &nbsp;&nbsp;
+            <div *ngIf="step.stepNumber === steps.length && authorofRecipe === username">
+              <i class="fas fa-trash-alt" (click)="recipeStepDelete(step.id)" type="button"></i>
+            </div>
+          </div>
+
+          <p>{{ step.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-outline-secondary my-4 text-center" *ngIf="username">
+      <div class="card-header ">Zostaw ocenę</div>
+      <div class="card-body">
+
+        <ngb-rating [(rate)]="currentRate" max="5"></ngb-rating>
+        <hr>
+        <pre>Twoja ocena: <b>{{currentRate}}</b></pre>
+        <div class="row d-flex justify-content-center">
+          <a class="badge badge-success mr-2" *ngIf="!rateAdded" (click)="addRate(currentRate)">Dodaj ocenę</a>
+          <a class="badge badge-warning mr-2" *ngIf="rateAdded" (click)="editRate(currentRate)">Edytuj ocenę</a>
+          <a class="badge badge-danger" *ngIf="rateAdded" (click)="deleteRate()">Usuń ocenę</a>
+        </div>
+      </div>
+    </div>
+    <!-- /.card -->
+    <div class="card card-outline-secondary my-4">
+      <div class="card-header">Komentarze</div>
+      <div class="card-body">
+        <div *ngFor="let comment of comments; let i = index">
+          <p>{{ comment.message }}</p>
+          <div class="row">
+            <div class="col"><small class="text-muted">Dodane przez {{ authorsOfComments[i] }} dnia
+                {{ comment.dateCreated | date: "mediumDate":"+0200":"pl" }}</small></div>
+            <div class="col">
+              <div *ngIf="isLoggedIn  && username === authorsOfComments[i]">
+                <button type="button" class="close" aria-label="Close"
+                  (click)="deleteComment(comment.comment_id)">&times;</button>
+              </div>
+            </div>
+
+          </div>
+
+
+
+          <hr />
+        </div>
+        <!-- pole tekstowe komentarza-->
+        <div class="container pb-cmnt-container" *ngIf="username">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel-body">
+                <textarea placeholder="Napisz swój komentarz tutaj!" class="pb-cmnt-textarea" #message></textarea>
+                <a class="btn btn-success" (click)="addComment(message)">Dodaj komentarz</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- komentarze -->
+
+    <!-- /.col-lg-8 -->
+  </div>
+
+  <!-- /.container -->
+</div>>

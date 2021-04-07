@@ -1,0 +1,36 @@
+.pb-cmnt-container {
+  font-family: Lato;
+  margin-top: 100px;
+}
+
+.pb-cmnt-textarea {
+  resize: none;
+  padding: 20px;
+  height: 130px;
+  width: 100%;
+  border: 1px solid #F2F2F2;
+}
+
+@media (min-width: 992px) {
+  .fixed {
+    position: fixed;
+    width: 25%;
+    max-width: 360px;
+  }
+}
+
+.close {
+  color: red;
+}
+
+.title {
+  display: inline;
+}
+
+button {
+  margin: 5px;
+}
+
+span {
+  display: inline-block;
+}

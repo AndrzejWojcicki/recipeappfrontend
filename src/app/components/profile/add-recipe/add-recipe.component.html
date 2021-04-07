@@ -1,0 +1,96 @@
+<div class="container" *ngIf="currentUser; else loggedOut">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-6">
+      <br />
+      <form *ngIf="!isSucceded" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" >
+
+        <div class="form-group">
+          <label for="name">Nazwa przepisu</label>
+          <input type="text" class="form-control" name="name" [(ngModel)]="form.name" required minlength="3"
+            #name="ngModel" />
+          <div class="alert-danger" role="alert" *ngIf="f.submitted && name.invalid">
+            <div *ngIf="name.errors.required">
+              Nazwa przepisu jest wymagana
+            </div>
+            <div *ngIf="name.errors.minlength">
+              Nazwa przepisu musi posiadać przynajmniej 3 znaki
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="imageUrl">Url zdjęcia</label>
+          <small>
+            <br>
+              Skorzystaj ze stron do dodawania zdjęć
+              <a routerLink="/FAQ-zdjecia">
+                (poradnik do dodawania zdjęć)
+                </a>
+          </small>
+          <input type="url" class="form-control" name="imageUrl" [(ngModel)]="form.imageUrl" #imageUrl="ngModel" />
+        </div>
+
+        <div class="form-group">
+          <label for="preparationTime">Czas przygotowania</label>
+          <small>
+            <p> (Podaj w minutach)</p>
+          </small>
+          <input type="number" min="0" class="form-control" name="preparationTime" [(ngModel)]="form.preparationTime"
+            required #preparationTime="ngModel" />
+          <div class="alert-danger" role="alert" *ngIf="f.submitted && name.invalid">
+            <div *ngIf="preparationTime.errors.required">
+              Czas przygotowania jest wymagany
+            </div>
+            <div class="alert-danger" role="alert" *ngIf="preparationTime.errors.min">
+              Czas przygotowania nie może być ujemny
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Kategoria przepisu</label>
+          <select class="form-control" [(ngModel)]="form.category" name="category" required #category="ngModel">
+            <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.categoryName }}</option>
+          </select>
+          <div class="alert-danger" role="alert" *ngIf="f.submitted && category.invalid">
+            <div *ngIf="category.errors.required">
+              Musisz wybrać kategorie przepisu !
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="difficulty">Poziom trudności przepisu</label>
+          <select class="form-control" [(ngModel)]="form.difficulty" name="difficulty" required #difficulty="ngModel">
+            <option *ngFor="let dif of difficulties" [value]="dif.id">{{ dif.name }}</option>
+          </select>
+          <div class="alert-danger" role="alert" *ngIf="f.submitted && difficulty.invalid">
+            <div *ngIf="difficulty.errors.required">
+              Musisz wybrać poziom trudności wykonania przepisu !
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <div class="form-group">
+            <button class="btn btn-primary btn-block">Dodaj dane przepisu</button>
+          </div>
+        </div>
+        <div class="alert alert-warning text-center" role="alert" *ngIf="f.submitted && isFailed">
+          Dodawanie nie powiodło się. Sprawdź czy podałeś prawidłowe dane.<br />{{ errorMessage }}
+        </div>
+      </form>
+      <div *ngIf="isSucceded">
+        <div class="alert alert-success text-center">
+          Dodawanie powiodło się!
+        </div>
+        <div class="d-flex justify-content-center">
+          <button routerLink="/profil/dodajkroki/{{addedRecipeId.id}}" class="btn btn-secondary btn-sm">
+            Dodaj kroki
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
+<ng-template #loggedOut> Zaloguj się !</ng-template>

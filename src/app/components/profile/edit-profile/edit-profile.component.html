@@ -1,0 +1,160 @@
+<div *ngIf="currentUser; else loggedOut">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-12">
+      <br />
+      <div class="card card-container align-items-center">
+        <i class="fas fa-user-circle fa-7x"></i>
+        <h1>Edytuj dane</h1>
+        <br />
+        <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+          <div class="form-group">
+            <label for="userName">Nowa nazwa użytkownika </label> <br>
+            <small>(Podaj stare jeśli nie chcesz zmieniać)</small>
+
+            <input type="text" class="form-control" name="userName" [(ngModel)]="form.userName" required minlength="3"
+              maxlength="20" #username="ngModel" />
+            <div class="alert-danger" *ngIf="f.submitted && username.invalid">
+              <div *ngIf="username.errors.required">
+                Nazwa użytkownika jest wymagana
+              </div>
+              <div *ngIf="username.errors.minlength">
+                Nazwa użytkownika musi posiadać przynajmniej 3 znaki
+              </div>
+              <div *ngIf="username.errors.maxlength">
+                Nazwa użytkownika nie może być dłuższa niż 20 znaków
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="firstName">Edytuj imię</label>
+            <input type="text" class="form-control" name="firstName" [(ngModel)]="form.firstName" optional firstName
+              #firstName="ngModel" />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Edytuj nazwisko</label>
+            <input type="text" class="form-control" name="lastName" [(ngModel)]="form.lastName" optional lastName
+              #firstName="ngModel" />
+          </div>
+          <div class="form-group">
+            <label for="calories">Limit Kalorii na dzień</label>
+            <div *ngIf="this.calProc > 0 && form.calories !== null && form.fat !== null
+              && form.proteins !== null && form.carbohydrates !== null">
+              <small>
+                {{calProc}} %
+              </small>
+            </div>
+
+            <input type="number" min="0" class="form-control" proc="" pattern="^\d*$" name="calories" [(ngModel)]="form.calories" optional calories
+            (ngModelChange)="caloriesChange($event)"
+              #calories="ngModel" />
+              <div class="alert-danger" role="alert" *ngIf="f.submitted && calories.invalid">
+                <div *ngIf="calories.errors.pattern">
+                  Zły format danych
+                </div>
+              </div>
+              <div class="alert-danger" role="alert" *ngIf="f.submitted && proc">
+                Suma Kalorii musi wynosić 100%
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="proteins">Limit gram białka na dzień</label>
+            <div *ngIf="this.calProc > 0 && form.calories !== null && form.fat !== null
+              && form.proteins !== null && form.carbohydrates !== null">
+              <small>
+                {{calProt}} %
+              </small>
+            </div>
+            <input type="number" class="form-control" pattern="^\d*$" min=0 name="proteins" [(ngModel)]="form.proteins" optional proteins
+            (ngModelChange)="caloriesChange($event)"
+              #proteins="ngModel" />
+              <div class="alert-danger" role="alert" *ngIf="f.submitted && proteins.invalid">
+                <div *ngIf="proteins.errors.pattern">
+                  Zły format danych
+                </div>
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="fat">Limit gram tłuszczu na dzień</label>
+            <div *ngIf="this.calProc > 0 && form.calories !== null && form.fat !== null
+              && form.proteins !== null && form.carbohydrates !== null">
+              <small>
+                {{calFat}} %
+              </small>
+            </div>
+            <input type="number" min="0" pattern="^\d*$" class="form-control" name="fat" [(ngModel)]="form.fat" optional fat
+            (ngModelChange)="caloriesChange($event)"
+              #fat="ngModel" />
+              <div class="alert-danger" role="alert" *ngIf="f.submitted && fat.invalid">
+                <div *ngIf="fat.errors.pattern">
+                  Zły format danych
+                </div>
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="carbohydrates">Limit gram węglowodanów na dzień</label>
+            <div *ngIf="this.calProc > 0 && form.calories !== null && form.fat !== null
+              && form.proteins !== null && form.carbohydrates !== null">
+              <small>
+                {{calCarb}} %
+              </small>
+            </div>
+            <input type="number" pattern="^\d*$" class="form-control" min="0" name="carbohydrates" [(ngModel)]="form.carbohydrates" optional carbohydrates
+            (ngModelChange)="caloriesChange($event)"
+              #carbohydrates="ngModel" />
+              <div class="alert-danger" role="alert" *ngIf="f.submitted && carbohydrates.invalid">
+                <div *ngIf="carbohydrates.errors.pattern">
+                  Zły format danych
+                </div>
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="password">Nowe hasło </label><br>
+            <small>(Podaj stare jeśli nie chcesz zmieniać)</small>
+            <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
+              minlength="6" #password="ngModel" />
+            <div class="alert-danger" *ngIf="f.submitted && password.invalid">
+              <div *ngIf="password.errors.required">Hasło jest wymagane</div>
+              <div *ngIf="password.errors.minlength">
+                Hasło musi posiadać przynajmniej 6 znaków
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <div class="form-group">
+              <button class="btn btn-primary btn-block">Edytuj</button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <div class="form-group">
+              <button class="btn btn-primary btn-block" [routerLink]="'/profil'">
+                Powrót
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="alert alert-warning text-center" *ngIf="f.submitted && isEditFailed">
+              Edycja się nie powiodła! Wprowadź nowe dane.<br />
+            </div>
+          </div>
+        </form>
+        <div *ngIf="isSuccessful">
+          <div class="alert alert-success text-center">Edycja powiodła się!</div>
+          <div class="d-flex justify-content-center">
+            <div class="form-group">
+              <a [routerLink]="'/profil'" class="justify-content-center align-self-center">
+                <button class="btn btn-primary btn-block">
+                  Powrót
+                </button>
+                <br /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
+<ng-template #loggedOut> Zaloguj się !</ng-template>

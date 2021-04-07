@@ -1,0 +1,49 @@
+<div class="container" *ngIf="currentUser; else loggedOut">
+  <div *ngIf="ownRecipe; else notAuthor">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-6">
+        <br>
+        <form *ngIf="!isSucceded" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+          <div class="form-group">
+            <label for="description">Opis kroku</label>
+            <textarea type="text" class="form-control" name="description" [(ngModel)]="form.description" required
+              #description="ngModel" style="resize: none;" rows="6"> </textarea>
+            <div class="alert-danger" role="alert" *ngIf="f.submitted && description.invalid">
+              <div *ngIf="description.errors.required">
+                Opis kroku jest wymagany
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <div class="form-group">
+              <button class="btn btn-primary btn-block">Edytuj krok</button>
+            </div>
+          </div>
+          <div class="alert alert-warning text-center" role="alert" *ngIf="f.submitted && isFailed">
+            Edycja nie powiodła się! Spróbuj ponownie.<br />{{ errorMessage }}
+          </div>
+          <div class="d-flex justify-content-center">
+            <button (click)="returnToRecipe()" class="btn btn-secondary btn-sm">
+              Powrót
+            </button>
+          </div>
+        </form>
+        <div *ngIf="isSucceded">
+          <div class="alert alert-success text-center">
+            Edycja powiodła się!
+          </div>
+          <div class="d-flex justify-content-center">
+            <button (click)="returnToRecipe()" class="btn btn-secondary btn-sm">
+              Powrót
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+  <ng-template #notAuthor> To nie twój przepis !</ng-template>
+</div>
+<ng-template #loggedOut> Zaloguj się !</ng-template>

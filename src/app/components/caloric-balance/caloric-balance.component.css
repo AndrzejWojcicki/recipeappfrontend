@@ -1,0 +1,33 @@
+span {
+  display: inline-block;
+}
+
+.close {
+  color: red;
+}
+
+button {
+  margin: 8px;
+  border: 1px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+h5 {
+  margin: 8px;
+  padding: 6px 12px;
+}
+
+a {
+  color: #007bff !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
+  cursor: pointer !important;
+}
+
+a:hover {
+  color: #0056b3 !important;
+  text-decoration: underline !important;
+}

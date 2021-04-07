@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" [routerLink]="'/przepisy'"
+      >PrzepisyApp <i class="fas fa-book-open"></i
+    ></a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarResponsive"
+      aria-controls="navbarResponsive"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="collapse navbar-collapse justify-content-end"
+      id="navbarResponsive"
+    >
+      <app-search></app-search>
+      <ul class="navbar-nav ml-auto">
+        <!-- Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbardrop"
+            data-toggle="dropdown"
+          >
+            Przepisy <i class="fas fa-cookie-bite"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a
+              class="dropdown-item"
+              *ngFor="let category of categories; let i = index"
+              [routerLink]="'/kategoria/' + category.id"
+              >{{ category.categoryName }}</a
+            >
+          </div>
+        </li>
+
+      <li class="nav-item" *ngIf="username">
+        <a [routerLink]="'/profil/lista-zakupow'" class="nav-link" routerLink="profile">
+            Lista zakupów <i class="fas fa-shopping-basket"></i>
+        </a>
+      </li>
+
+      <li class="nav-item" *ngIf="!username">
+        <a class="nav-link" [routerLink]="'/zaloguj'"
+          >Zaloguj <i class="fas fa-sign-in-alt"></i
+        ></a>
+      </li>
+
+
+      <li class="nav-item" *ngIf="username">
+        <a [routerLink]="'/profil'" class="nav-link" routerLink="profile">
+          Profil <i class="far fa-user-circle"></i
+        ></a>
+      </li>
+      <li class="nav-item" *ngIf="username">
+        <a href class="nav-link" (click)="logout()"
+          >LogOut <i class="fas fa-sign-out-alt"></i
+        ></a>
+      </li>
+    </ul>
+    </div>
+
+  </div>
+</nav>

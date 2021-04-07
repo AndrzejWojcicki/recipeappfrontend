@@ -1,0 +1,23 @@
+<div class="container h-100">
+  <div class="d-flex justify-content-center h-100">
+    <form class="form-inline mr-auto">
+      <div class="input-group-append">
+      <input
+        class="form-control mr-sm-2"
+        #searchInput
+        (keyup.enter)="(searchInput.value)"
+        type="text"
+        placeholder="Szukaj"
+        aria-label="Search"
+      />
+    </div>
+      <button class="searchButton"
+        class="btn btn-outline-success btn-rounded btn-sm my-0"
+        type="submit"
+        (click)="searchRecipes(searchInput.value)"
+      >
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+  </div>
+</div>

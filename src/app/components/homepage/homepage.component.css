@@ -1,0 +1,12 @@
+h3,
+a,
+p {
+  -webkit-text-stroke: 1px rgb(17, 90, 45);
+  color: white;
+  text-shadow:
+    2px 2px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}

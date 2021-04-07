@@ -1,0 +1,43 @@
+<div class="container" *ngIf="currentUser; else loggedOut">
+  <div class="table-responsive-md">
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Produkt</th>
+      <th scope="col">Ilość</th>
+      <th scope="col"></th>
+      <th scope="col" style="min-width: 272px;">Uwagi</th>
+      <th scope="col">Akcja</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let shoppingItem of shoppingList">
+
+      <td class="align-middle test" *ngIf="shoppingItem.bought">{{shoppingItem.productName}}</td>
+      <td class="align-middle" *ngIf="!shoppingItem.bought">{{shoppingItem.productName}}</td>
+      <td class="align-middle">{{shoppingItem.quantity}}
+      </td>
+      <td class="align-middle"><a type="button" (click)="quantityUp(shoppingItem)"><i class="far fa-arrow-alt-circle-up"></i></a> <br>
+        <a type="button" *ngIf="shoppingItem.quantity > 1"  (click)="quantityDown(shoppingItem)"><i class="far fa-arrow-alt-circle-down"></i></a>
+      </td>
+      <td class="align-middle">{{shoppingItem.additionalNote}}</td>
+      <td class="align-middle"><span><a type="button" (click)="onEdit(shoppingItem)"><i class="fas fa-pen-square"></i> &nbsp;</a>
+        <a type="button" (click)="delete(shoppingItem)"><i class="far fa-minus-square"></i></a></span> <br>
+        <a type="checkbox" (click)="check(shoppingItem)" >
+          <i *ngIf="!shoppingItem.bought" class="far fa-clipboard"></i>
+          <i *ngIf="shoppingItem.bought" class="fas fa-clipboard-check"></i>
+        </a>
+        </td>
+    </tr>
+  </tbody>
+    </table>
+  </div>
+  <div class="d-flex justify-content-center">
+    <button class="btn btn-success btn-sm" (click)="onCreate()">
+      Dodaj produkt <i class="fas fa-notes-medical"></i>
+    </button>
+  </div>
+</div>
+<br>
+
+<ng-template #loggedOut> Zaloguj się !</ng-template>

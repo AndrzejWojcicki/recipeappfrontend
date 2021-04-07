@@ -1,0 +1,87 @@
+<div class="container" *ngIf="currentUser; else loggedOut">
+  <div *ngIf="ownRecipe; else notAuthor">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-6 center">
+
+
+        <br />
+        <form *ngIf="!isSucceded" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+          <div class="form-group">
+            <label for="unit">Jednostka</label>
+            <br>
+              <small>
+                  <a routerLink="/FAQ-jednostki">
+                    (Tabela zamiany jednostki na gramy)
+                  </a>
+              </small>
+            <select class="form-control" [(ngModel)]="form.unit" name="unit" required
+              #unit="ngModel">
+              <option *ngFor="let unit of units" [value]="unit">{{ unit }}</option>
+            </select>
+            <div class="alert-danger" role="alert" *ngIf="f.submitted && unit.invalid">
+              <div *ngIf="unit.errors.required">
+                Musisz wybrać jednostkę
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="amount">Ilość</label> <br>
+            <small></small>
+            <input type="number" step ="0.01" min="0" class="form-control" pattern="^\d*(\.\d(\d)?)?$"  name="amount" [(ngModel)]="form.amount" required
+              #amount="ngModel" />
+            <div class="alert-danger" role="alert" *ngIf="f.submitted && amount.invalid">
+              <div *ngIf="amount.errors.required">
+                Musisz podać ilość produktu
+              </div>
+              <div *ngIf="amount.errors.pattern">
+                Zły format danych
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-center">
+            <div class="form-group">
+              <button class="btn btn-primary btn-block">Edytuj ilość składnika</button>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-center">
+            <button (click)="returnToRecipe()" class="btn btn-secondary btn-sm">
+              Powrót
+            </button>
+          </div>
+
+          <div class="alert alert-warning text-center" role="alert" *ngIf="f.submitted && isFailed">
+            Edycja nie powiodła się. Sprawdź czy podałeś prawidłowe dane.<br />{{ errorMessage }}
+            <div class="d-flex justify-content-center">
+              <button (click)="returnToRecipe()" class="btn btn-secondary btn-sm">
+                Powrót
+              </button>
+            </div>
+          </div>
+
+        </form>
+        <div *ngIf="isSucceded">
+          <div class="alert alert-success text-center">
+            Edycja powiodła się!
+          </div>
+          <div class="d-flex justify-content-center">
+            <button (click)="returnToRecipe()" class="btn btn-secondary btn-sm">
+              Powrót
+            </button>
+          </div>
+        </div>
+
+
+
+
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+  <ng-template #notAuthor> To nie twój przepis !</ng-template>
+</div>
+<ng-template #loggedOut> Zaloguj się !</ng-template>
