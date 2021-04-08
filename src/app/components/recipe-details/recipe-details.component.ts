@@ -278,6 +278,7 @@ export class RecipeDetailsComponent implements OnInit {
             this.ingredientsAmount.push(data.amount);
             this.calculate(data.ingredient, data.amount);
             this.ingredient.push(data.ingredient);
+            this._spinnerService.hide();
           });
         })
       );
