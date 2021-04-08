@@ -84,6 +84,7 @@ export class RecipeDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this._spinnerService.show();
     this.user = this.tokenStorage.getUser();
     if (this.user) {
       this.username = this.user.username;
@@ -105,7 +106,6 @@ export class RecipeDetailsComponent implements OnInit {
     const data = '';
     // tslint:disable-next-line: deprecation
     this._activatedRoute.paramMap.subscribe(() => {
-      this._spinnerService.show();
       this.getRecipeInfo();
       this.getRecipeSteps();
       this.getRecipeComments();
@@ -113,6 +113,7 @@ export class RecipeDetailsComponent implements OnInit {
       this.getRecipeAuthor();
       this.getRecipeIngredientsAmount();
     });
+    this._spinnerService.hide();
   }
 
   // tslint:disable-next-line: typedef
@@ -282,7 +283,6 @@ export class RecipeDetailsComponent implements OnInit {
         })
       );
     });
-    this._spinnerService.hide();
   }
 
   // tslint:disable-next-line: typedef
