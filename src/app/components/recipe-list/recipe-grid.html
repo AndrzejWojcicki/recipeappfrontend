@@ -10,7 +10,7 @@
   <div class="col-lg-4 col-md-6 mb-4" *ngFor="let recipe of recipes; let i = index">
     <div class="card h-100">
       <a routerLink="/przepisy/{{recipe.id}}"><img *ngIf="recipe.imageUrl !== null" class="card-img-top"
-          style="max-height: 220px; width: auto" [src]="recipe.imageUrl" alt="" />
+          style="max-height: 220px; width: auto; max-width: 330px;" [src]="recipe.imageUrl" alt="" />
         <img *ngIf="recipe.imageUrl === null" class="card-img-top" style="max-height: 220px; width: auto"
           [src]="'assets/images/noimage.png'" alt="" />
       </a>
