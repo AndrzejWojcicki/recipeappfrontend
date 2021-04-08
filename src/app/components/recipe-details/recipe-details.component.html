@@ -1,3 +1,11 @@
+<ngx-spinner type="la-square-jelly-box" size="default" bdColor="rgba(51, 51, 51, 0.8)">
+  <div style="color: #64d6e2" class="la-square-jelly-box la-3x">
+    <div></div>
+    <div></div>
+  </div>
+  <br />
+  <p style="color: white">Proszę czekać...</p>
+</ngx-spinner>
 <div class="row">
   <div class="col-lg-4">
     <div class="fixed">
@@ -9,7 +17,7 @@
           <div>
             <li class="list-group-item">
               <div class="row">
-                {{ ingredient[i]?.productName }} - <span> {{ ingredientAmount.amount }} {{ingredientAmount.unit}}</span>
+                {{ ingredient[i]?.productName }} - &nbsp;<span> {{ ingredientAmount.amount }} {{ingredientAmount.unit}}</span>
                 <div *ngIf="authorofRecipe === username">
                   &nbsp;
                   <i class="fas fa-pencil-alt fa-sm" (click)="recipeIngredientUpdate(ingredientAmount.id)"

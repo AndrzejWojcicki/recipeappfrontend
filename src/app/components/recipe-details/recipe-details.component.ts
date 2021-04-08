@@ -17,6 +17,7 @@ import { Ingredient } from 'src/app/common/ingredient';
 import { TokenStorageService } from 'src/app/services/authentication/token-storage.service';
 import { ShoppingListService } from 'src/app/services/shoppingList.service';
 import { DietsService } from 'src/app/services/diet.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 registerLocaleData(localePl, 'pl');
 
@@ -78,6 +79,8 @@ export class RecipeDetailsComponent implements OnInit {
     private ingredietService: IngredientsService,
     private shoppingListService: ShoppingListService,
     private dietService: DietsService,
+    // tslint:disable-next-line: variable-name
+    private _spinnerService: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -102,6 +105,7 @@ export class RecipeDetailsComponent implements OnInit {
     const data = '';
     // tslint:disable-next-line: deprecation
     this._activatedRoute.paramMap.subscribe(() => {
+      this._spinnerService.show();
       this.getRecipeInfo();
       this.getRecipeSteps();
       this.getRecipeComments();
@@ -278,6 +282,7 @@ export class RecipeDetailsComponent implements OnInit {
         })
       );
     });
+    this._spinnerService.hide();
   }
 
   // tslint:disable-next-line: typedef
