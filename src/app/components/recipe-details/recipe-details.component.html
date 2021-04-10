@@ -7,43 +7,10 @@
   <p style="color: white">Proszę czekać...</p>
 </ngx-spinner>
 <div class="row">
-  <div class="col-lg-4">
-    <div class="fixed">
-      <h4 class="my-4">Składniki
-
-      </h4>
-      <div class="list-group" *ngFor="let ingredientAmount of ingredientsAmount; let i = index">
-        <ul class="list-group">
-          <div>
-            <li class="list-group-item">
-              <div class="row">
-                {{ ingredient[i]?.productName }} - &nbsp;<span> {{ ingredientAmount.amount }} {{ingredientAmount.unit}}</span>
-                <div *ngIf="authorofRecipe === username">
-                  &nbsp;
-                  <i class="fas fa-pencil-alt fa-sm" (click)="recipeIngredientUpdate(ingredientAmount.id)"
-                    type="button"></i>
-                </div>
-                <div *ngIf="authorofRecipe === username">
-                  &nbsp;
-                  <i class="fas fa-times close" (click)="recipeIngredientDelete(ingredientAmount.id)" type="button"></i>
-                </div>
-              </div>
-
-            </li>
-          </div>
-        </ul>
-      </div>
-      <div *ngIf="authorofRecipe === username">
-        <hr>
-        <button (click)="ingredientAdd()" type="button" class="btn btn-success mr-1">Dodaj składnik <i class="far fa-plus-square"></i></button>
-      </div>
-      <div *ngIf="username"><button (click)="ingredientToShoppingList()" type="button" class="btn btn-outline-success mr-1">Dodaj do listy zakupów <i class="fas fa-cart-plus"></i></button></div>
-      <div *ngIf="username"><button (click)="ingredientToDiet()" type="button" class="btn btn-outline-success mr-1">Dodaj do bilansu użytkownika <i class="fas fa-balance-scale-left"></i></button></div>
-      <hr>
-    </div>
-  </div>
+  <ng-container *ngIf="screenWidth > 992">
+    <ng-container *ngTemplateOutlet="ingredients; context: {}"></ng-container>
+</ng-container>
   <!-- /.col-lg-4 -->
-
   <div class="col-lg-8">
     <br />
     <div class="title">
@@ -119,7 +86,6 @@
           <h4>Cały przepis ma:
           </h4>
         </div>
-
         <br>
         <div class="row">
           <div class="col text-center">
@@ -127,7 +93,6 @@
             <p>Kalorie: {{this.totalCalories}} kcal</p>
           </div>
         </div>
-
         <div class="row">
           <div class="col text-center">
             <i class="fas fa-drumstick-bite fa-lg"></i>
@@ -141,9 +106,10 @@
             <i class="fas fa-seedling fa-lg"></i>
             <p>Węglowodany: {{this.totalCarbs}}g</p>
           </div>
-
         </div>
-
+        <ng-container *ngIf="screenWidth < 992">
+          <ng-container *ngTemplateOutlet="ingredients; context: {}"></ng-container>
+        </ng-container>
         <h4>Przygotowanie krok po kroku
         </h4>
         <div *ngIf="authorofRecipe === username && steps.length > 0">
@@ -153,7 +119,6 @@
         <div *ngIf="authorofRecipe === username && steps.length === 0">
           <button (click)="stepsAdd()" type="button" class="btn btn-success mr-1">Dodaj kroki</button>
         </div>
-
         <hr />
         <div class="container" *ngFor="let step of steps">
           <div class="row">
@@ -166,21 +131,19 @@
               <i class="fas fa-trash-alt" (click)="recipeStepDelete(step.id)" type="button"></i>
             </div>
           </div>
-
           <p>{{ step.description }}</p>
         </div>
       </div>
     </div>
-
     <div class="card card-outline-secondary my-4 text-center" *ngIf="username">
       <div class="card-header ">Zostaw ocenę</div>
       <div class="card-body">
-
+        <pre *ngIf="!rateAdded">Nie dodałeś jeszcze oceny! <br> Wybierz ilość gwiazdek i kliknij dodaj</pre>
         <ngb-rating [(rate)]="currentRate" max="5"></ngb-rating>
         <hr>
-        <pre>Twoja ocena: <b>{{currentRate}}</b></pre>
+        <pre *ngIf="currentRate > 0">Twoja ocena: <b>{{currentRate}}</b></pre>
         <div class="row d-flex justify-content-center">
-          <a class="badge badge-success mr-2" *ngIf="!rateAdded" (click)="addRate(currentRate)">Dodaj ocenę</a>
+          <a class="badge badge-success mr-2" *ngIf="!rateAdded && currentRate > 0" (click)="addRate(currentRate)">Dodaj ocenę</a>
           <a class="badge badge-warning mr-2" *ngIf="rateAdded" (click)="editRate(currentRate)">Edytuj ocenę</a>
           <a class="badge badge-danger" *ngIf="rateAdded" (click)="deleteRate()">Usuń ocenę</a>
         </div>
@@ -201,11 +164,7 @@
                   (click)="deleteComment(comment.comment_id)">&times;</button>
               </div>
             </div>
-
           </div>
-
-
-
           <hr />
         </div>
         <!-- pole tekstowe komentarza-->
@@ -221,11 +180,59 @@
         </div>
       </div>
     </div>
-
     <!-- komentarze -->
-
     <!-- /.col-lg-8 -->
   </div>
-
   <!-- /.container -->
 </div>
+<ng-template #ingredients
+             let-item
+             let-line="line"
+             let-styleClass="class">
+    <div class="col-lg-4">
+        <div class="fixed">
+            <h4 class="my-4">Składniki
+            </h4>
+            <div class="list-group"
+                 *ngFor="let ingredientAmount of ingredientsAmount; let i = index">
+                <ul class="list-group">
+                    <div>
+                        <li class="list-group-item">
+                            <div class="row">
+                                {{ ingredient[i]?.productName }} - &nbsp;<span> {{ ingredientAmount.amount }}
+                                    {{ingredientAmount.unit}}</span>
+                                <div *ngIf="authorofRecipe === username">
+                                    &nbsp;
+                                    <i class="fas fa-pencil-alt fa-sm"
+                                       (click)="recipeIngredientUpdate(ingredientAmount.id)"
+                                       type="button"></i>
+                                </div>
+                                <div *ngIf="authorofRecipe === username">
+                                    &nbsp;
+                                    <i class="fas fa-times close"
+                                       (click)="recipeIngredientDelete(ingredientAmount.id)"
+                                       type="button"></i>
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+            <div *ngIf="authorofRecipe === username">
+                <hr>
+                <button (click)="ingredientAdd()"
+                        type="button"
+                        class="btn btn-success mr-1">Dodaj składnik <i class="far fa-plus-square"></i></button>
+            </div>
+            <div *ngIf="username"><button (click)="ingredientToShoppingList()"
+                        type="button"
+                        class="btn btn-outline-success mr-1">Dodaj do listy zakupów <i
+                       class="fas fa-cart-plus"></i></button></div>
+            <div *ngIf="username"><button (click)="ingredientToDiet()"
+                        type="button"
+                        class="btn btn-outline-success mr-1">Dodaj do bilansu użytkownika <i
+                       class="fas fa-balance-scale-left"></i></button></div>
+            <hr>
+        </div>
+    </div>
+</ng-template>

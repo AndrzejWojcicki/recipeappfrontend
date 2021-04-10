@@ -186,11 +186,11 @@ export class CaloricBalanceComponent implements OnInit {
   deleteUserDiet(userDietId): void {
     this.dietService.deleteDiet(userDietId).subscribe(response => {
       console.log(response);
+      window.location.reload();
     },
       error => {
         console.log(error);
       });
-    window.location.reload();
   }
 
   editUserDiet(dietId: number): void {
@@ -205,12 +205,12 @@ export class CaloricBalanceComponent implements OnInit {
     this.tempArray.forEach((diet) =>
       this.dietService.deleteDiet(diet.diet.id).subscribe(response => {
         console.log(response);
+        window.location.reload();
       },
         error => {
           console.log(error);
         })
     );
-    window.location.reload();
   }
 
   goToUserEdit(): void {

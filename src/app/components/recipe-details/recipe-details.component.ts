@@ -6,7 +6,7 @@ import { IngredientsForRecipe } from './../../common/ingredients-for-recipe';
 import { Rating } from './../../common/rating';
 import { Comment } from 'src/app/common/comment';
 import { RecipeSteps } from './../../common/recipe_step';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Recipe } from 'src/app/common/recipe';
 import { RecipeService } from 'src/app/services/recipe.service';
@@ -41,6 +41,8 @@ export class RecipeDetailsComponent implements OnInit {
   ingredient: Ingredient[] = new Array();
   user;
   tempArray = new Array();
+  screenHeight: number;
+  screenWidth: number;
 
   // comments checking section
   message: string;
@@ -50,7 +52,7 @@ export class RecipeDetailsComponent implements OnInit {
   isLoggedIn = false;
 
   // rating
-  currentRate = 3;
+  currentRate = 0;
   rateAdded = false;
   userRateId: number;
 
@@ -65,6 +67,14 @@ export class RecipeDetailsComponent implements OnInit {
   proteins = 0;
   fat = 0;
   carbs = 0;
+
+  @HostListener('window:resize', ['$event'])
+  // tslint:disable-next-line: typedef
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+    console.log(this.screenHeight, this.screenWidth);
+  }
 
   constructor(
     // tslint:disable-next-line: variable-name
@@ -81,7 +91,7 @@ export class RecipeDetailsComponent implements OnInit {
     private dietService: DietsService,
     // tslint:disable-next-line: variable-name
     private _spinnerService: NgxSpinnerService
-  ) { }
+  ) { this.getScreenSize(); }
 
   ngOnInit(): void {
     this.user = this.tokenStorage.getUser();
@@ -153,7 +163,7 @@ export class RecipeDetailsComponent implements OnInit {
         this.total += this.ratings[i].value;
         this.compareRatingAuthor(this.ratings[i].rating_id);
       }
-      this.avgRatings = this.total / this.ratings.length;
+      this.avgRatings = Math.round((this.total / this.ratings.length) * 10) / 10;
       if (Number.isNaN(this.avgRatings)) {
         this.avgRatings = 0;
       }
@@ -226,12 +236,12 @@ export class RecipeDetailsComponent implements OnInit {
     this.ratingService.deleteRate(this.userRateId).subscribe(
       (response) => {
         console.log(response);
+        this.reloadPage();
       },
       (error) => {
         console.log(error);
       }
     );
-    this.reloadPage();
   }
 
   // tslint:disable-next-line: typedef
@@ -377,11 +387,11 @@ export class RecipeDetailsComponent implements OnInit {
     this.commentService.deleteComent(commentId).subscribe(
       response => {
         console.log(response);
+        this.reloadPage();
       },
       error => {
         console.log(error);
       });
-    this.reloadPage();
   }
 
   recipeDetailsEdit(): void {
@@ -413,11 +423,11 @@ export class RecipeDetailsComponent implements OnInit {
     this.stepService.deleteStep(stepId).subscribe(
       response => {
         console.log(response);
+        this.reloadPage();
       },
       error => {
         console.log(error);
       });
-    this.reloadPage();
   }
 
   recipeIngredientUpdate(ingredientAmountId: number): void {
@@ -429,11 +439,11 @@ export class RecipeDetailsComponent implements OnInit {
     this.ingredietService.deleteIngredient(ingredientAmountId).subscribe(
       response => {
         console.log(response);
+        this.reloadPage();
       },
       error => {
         console.log(error);
       });
-    this.reloadPage();
   }
 
   reloadPage(): void {

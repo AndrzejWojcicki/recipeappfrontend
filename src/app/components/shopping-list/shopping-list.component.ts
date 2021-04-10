@@ -91,8 +91,13 @@ export class ShoppingListComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   delete(shoppingListId: ShoppingList) {
-    this._shoppingService.deleteShoppingList(shoppingListId.id).subscribe();
-    location.reload();
+    this._shoppingService.deleteShoppingList(shoppingListId.id).subscribe(response => {
+      console.log(response);
+      window.location.reload();
+    },
+      error => {
+        console.log(error);
+      });
   }
 
   // tslint:disable-next-line: typedef
