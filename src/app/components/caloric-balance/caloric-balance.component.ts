@@ -211,6 +211,14 @@ export class CaloricBalanceComponent implements OnInit {
         })
     );
     this.tempArray = [];
+    this.totalCalories = 0;
+    this.totalCarbs = 0;
+    this.totalFat = 0;
+    this.totalProteins = 0;
+    this.procCalories = 0;
+    this.procCarbs = 0;
+    this.procFat = 0;
+    this.procProteins = 0;
   }
 
   goToUserEdit(): void {

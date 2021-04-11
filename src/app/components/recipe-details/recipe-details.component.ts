@@ -201,12 +201,12 @@ export class RecipeDetailsComponent implements OnInit {
     this.ratingService.addRate(ratePack).subscribe(
       (response) => {
         console.log(response);
+        this.reloadPage();
       },
       (error) => {
         console.log(error);
       }
     );
-    this.reloadPage();
   }
 
   editRate(ratingValue: number): void {
@@ -223,12 +223,12 @@ export class RecipeDetailsComponent implements OnInit {
     this.ratingService.updateRate(this.userRateId, ratePack).subscribe(
       (response) => {
         console.log(response);
+        this.reloadPage();
       },
       (error) => {
         console.log(error);
       }
     );
-    this.reloadPage();
   }
 
   deleteRate(): void {
@@ -375,12 +375,12 @@ export class RecipeDetailsComponent implements OnInit {
     this.commentService.addComent(commentPack).subscribe(
       (response) => {
         console.log(response);
+        this.reloadPage();
       },
       (error) => {
         console.log(error);
       }
     );
-    this.reloadPage();
   }
   deleteComment(commentId: number): void {
     // tslint:disable-next-line: deprecation
