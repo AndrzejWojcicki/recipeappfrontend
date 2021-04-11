@@ -37,6 +37,11 @@
       Dodaj produkt <i class="fas fa-notes-medical"></i>
     </button>
   </div>
+  <div class="d-flex justify-content-center" *ngIf="shoppingList.length > 0">
+    <button class="btn btn-danger btn-sm" (click)="deleteAll()">
+      Wyczyść listę <i class="fas fa-trash-alt"></i>
+    </button>
+  </div>
 </div>
 <br>
 

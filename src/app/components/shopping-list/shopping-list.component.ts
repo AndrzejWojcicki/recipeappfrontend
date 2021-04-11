@@ -6,7 +6,7 @@ import { TokenStorageService } from 'src/app/services/authentication/token-stora
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddDialogComponent } from './add-dialog/add-dialog.component';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-shopping-list',
@@ -20,6 +20,8 @@ export class ShoppingListComponent implements OnInit {
   shoppingList: ShoppingList[] = new Array();
 
   constructor(
+    // tslint:disable-next-line: variable-name
+    private _activatedRoute: ActivatedRoute,
     private token: TokenStorageService,
     private router: Router,
     // tslint:disable-next-line: variable-name
@@ -29,7 +31,9 @@ export class ShoppingListComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.token.getUser();
-    this.getShoppingList();
+    this._activatedRoute.paramMap.subscribe(() => {
+      this.getShoppingList();
+    });
   }
 
   // tslint:disable-next-line: typedef
@@ -98,6 +102,19 @@ export class ShoppingListComponent implements OnInit {
       error => {
         console.log(error);
       });
+  }
+
+  // tslint:disable-next-line: typedef
+  deleteAll() {
+    this.shoppingList.forEach((shoppingListItem) => {
+      this._shoppingService.deleteShoppingList(shoppingListItem.id).subscribe(response => {
+        console.log(response);
+      },
+        error => {
+          console.log(error);
+        });
+    });
+    this.shoppingList = [];
   }
 
   // tslint:disable-next-line: typedef

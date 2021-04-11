@@ -13,3 +13,12 @@ th {
 span {
   display: inline-block;
 }
+
+button {
+  margin: 8px;
+  border: 1px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
