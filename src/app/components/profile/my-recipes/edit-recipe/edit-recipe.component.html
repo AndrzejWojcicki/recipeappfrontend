@@ -7,7 +7,7 @@
         <form *ngIf="!isSucceded" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 
           <div class="form-group">
-            <label for="name">Nazwa Przepisu</label>
+            <label for="name">Nazwa Przepisu <span class="required">&nbsp;*</span></label>
             <input type="text" class="form-control" name="name" [(ngModel)]="form.name" required minlength="3"
               #name="ngModel" />
             <div class="alert-danger" role="alert" *ngIf="f.submitted && name.invalid">
@@ -33,7 +33,7 @@
           </div>
 
           <div class="form-group">
-            <label for="preparationTime">Czas Przygotowania</label>
+            <label for="preparationTime">Czas Przygotowania <span class="required">&nbsp;*</span></label>
             <small>
               <p> (Podaj w minutach)</p>
             </small>
@@ -50,7 +50,7 @@
           </div>
 
           <div class="form-group">
-            <label for="category">Kategoria Przepisu</label>
+            <label for="category">Kategoria Przepisu <span class="required">&nbsp;*</span></label>
             <select class="form-control" [(ngModel)]="form.category" name="category" required #category="ngModel">
               <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.categoryName }}</option>
             </select>
@@ -61,7 +61,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="difficulty">Poziom Trudności Przepisu</label>
+            <label for="difficulty">Poziom Trudności Przepisu <span class="required">&nbsp;*</span></label>
             <select class="form-control" [(ngModel)]="form.difficulty" name="difficulty" required #difficulty="ngModel">
               <option *ngFor="let dif of difficulties" [value]="dif.id">{{ dif.name }}</option>
             </select>

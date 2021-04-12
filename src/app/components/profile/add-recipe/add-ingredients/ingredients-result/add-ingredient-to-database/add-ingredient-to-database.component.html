@@ -8,7 +8,7 @@
       <br />
       <form *ngIf="!isSucceded" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
         <div class="form-group">
-          <label for="name">Nazwa produktu</label>
+          <label for="name">Nazwa produktu <span class="required">&nbsp;*</span></label>
           <input type="text" class="form-control" name="name" [(ngModel)]="form.name" required minlength="3"
             #name="ngModel" />
           <div class="alert-danger" role="alert" *ngIf="f.submitted && name.invalid">
@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="calories">Wartość kaloryczna</label> <br>
+          <label for="calories">Wartość kaloryczna <span class="required">&nbsp;*</span></label> <br>
           <small>(podaj ilość na 100g produktu)</small>
           <input type="number" step ="0.1" min="0" class="form-control" pattern="^\d*(\.\d)?$"  name="calories" [(ngModel)]="form.calories" required
             #calories="ngModel" />
@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="fat">Tłuszcze</label> <br>
+          <label for="fat">Tłuszcze <span class="required">&nbsp;*</span></label> <br>
           <small>(podaj ilość na 100g produktu)</small>
           <input type="number" step ="0.1" min="0" pattern="^\d*(\.\d)?$" class="form-control" name="fat" [(ngModel)]="form.fat" required
             #fat="ngModel" />
@@ -49,7 +49,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="carbohydrates">Węglowodany</label> <br>
+          <label for="carbohydrates">Węglowodany <span class="required">&nbsp;*</span></label> <br>
           <small>(podaj ilość na 100g produktu)</small>
           <input type="number" step ="0.1" min="0" class="form-control" pattern="^\d*(\.\d)?$" name="carbohydrates" [(ngModel)]="form.carbohydrates" required
             #carbohydrates="ngModel" />
@@ -63,7 +63,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="proteins">Białko</label> <br>
+          <label for="proteins">Białko <span class="required">&nbsp;*</span></label> <br>
           <small>(podaj ilość na 100g produktu)</small>
           <input type="number" step ="0.1" min="0" class="form-control" pattern="^\d*(\.\d)?$" name="proteins" [(ngModel)]="form.proteins" required
             #proteins="ngModel" />

@@ -9,7 +9,7 @@
         <br />
         <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
           <div class="form-group">
-            <label for="userName">Nowa nazwa użytkownika </label> <br>
+            <label for="userName">Nowa nazwa użytkownika <span class="required">&nbsp;*</span></label> <br>
             <small>(Podaj stare jeśli nie chcesz zmieniać)</small>
 
             <input type="text" class="form-control" name="userName" [(ngModel)]="form.userName" required minlength="3"
@@ -109,7 +109,7 @@
               </div>
           </div>
           <div class="form-group">
-            <label for="password">Nowe hasło </label><br>
+            <label for="password">Nowe hasło <span class="required">&nbsp;*</span></label><br>
             <small>(Podaj stare jeśli nie chcesz zmieniać)</small>
             <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
               minlength="6" #password="ngModel" />

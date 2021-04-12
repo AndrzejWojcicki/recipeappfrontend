@@ -7,7 +7,7 @@
         <form *ngIf="!isSucceded" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 
           <div class="form-group">
-            <label for="description">Opis kroku</label>
+            <label for="description">Opis kroku <span class="required">&nbsp;*</span></label>
             <textarea type="text" class="form-control" name="description" [(ngModel)]="form.description" required
               #description="ngModel" style="resize: none;" rows="6"> </textarea>
             <div class="alert-danger" role="alert" *ngIf="f.submitted && description.invalid">
