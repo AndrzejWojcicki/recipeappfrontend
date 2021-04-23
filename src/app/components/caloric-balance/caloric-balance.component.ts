@@ -51,8 +51,10 @@ export class CaloricBalanceComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._spinnerService.show();
     this.currentUser = this.token.getUser();
+    if (this.currentUser) {
+      this._spinnerService.show();
+    }
     this.getUserInfo();
     this.getRecipeIngredientsAmount();
   }
