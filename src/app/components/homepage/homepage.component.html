@@ -13,7 +13,7 @@
 
         <div class="carousel-caption">
           <h1>Witaj w&nbsp;internetowej książce kucharskiej!</h1>
-          <h5>Jeśli szukasz pysznego przepisu lub pomysłu na posiłek to świetnie trafiłeś!.
+          <h5>Jeśli szukasz pysznego przepisu lub pomysłu na posiłek to świetnie trafiłeś!
             Znajdź przepisy wybierając je po kategoriach lub korzystając z&nbsp;wbudowanej wyszukiwarki.
             <br><a [routerLink]="'/zarejestruj'"> Załóż konto teraz!</a></h5>
         </div>
@@ -24,7 +24,7 @@
           src="assets/slide2.jpg"
           alt="Second slide">
         <div class="carousel-caption">
-          <h5>Po założeniu konta będziesz mógł dzielić się swoją opinią na temat przepisów w&nbsp;sekcji komentarzy, oceniać przepisy oraz je dodawać</h5>
+          <h5>Po założeniu konta dziel się swoją opinią na temat przepisów w&nbsp;sekcji komentarzy, oceniaj i dodawajprzepisy !</h5>
         </div>
       </div>
 
@@ -41,3 +41,60 @@
     </div>
   </div>
 </div>
+<br>
+<div class="container">
+  <div class="row d-flex align-items-center justify-content-center">
+    <div class="allimg"><a [routerLink]="'/przepisy/wszystkie'"> <img class="zoom" src="assets/allRecipes.jpg"></a></div>
+    <div class="centered"><a [routerLink]="'/przepisy/wszystkie'"><h5>Wszystkie przepisy</h5></a></div>
+  </div>
+  <br>
+  <div class="text-center">
+    <h2>Polecane przepisy</h2></div>
+    <br>
+  <div class="row d-flex align-items-center justify-content-center">
+    <div class="row text-center">
+      <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-center justify-content-center" *ngFor="let recipe of recipes; let i = index">
+      <div class="card h-100"  style="width: 280px;">
+        <a routerLink="/przepisy/{{recipe.id}}"><img *ngIf="recipe.imageUrl !== null" class="move card-img-top"
+          style="max-height: 175px; width: auto; max-width: 250px;" [src]="recipe.imageUrl" alt="" />
+        <img *ngIf="recipe.imageUrl === null" class="card-img-top" style="max-height: 220px; width: auto; max-width: 250px;"
+          [src]="'assets/images/noimage.png'" alt="" />
+      </a>
+      <div class="card-body">
+        <h4 class="card-title">
+          <a routerLink="/przepisy/{{recipe.id}}">{{recipe.name}}</a>
+        </h4>
+        <div class="row">
+          <div class="col">
+            <i class="far fa-clock"></i>
+            <p>{{recipe.preparationTime}} min</p>
+          </div>
+          <div class="col">
+            <div *ngIf="isEasy(recipe.difficulty)">
+              <i class="fas fa-utensils"></i>
+              <div>
+                <p>łatwe</p>
+              </div>
+            </div>
+            <div *ngIf="isMedium(recipe.difficulty)">
+              <i class="fas fa-utensils"></i>
+              <div>
+                <p>średnie</p>
+              </div>
+            </div>
+            <div *ngIf="isHard(recipe.difficulty)">
+              <i class="fas fa-utensils"></i>
+              <div>
+                <p>trudne</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<br>
+

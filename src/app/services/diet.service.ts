@@ -9,10 +9,10 @@ import { Ingredient } from '../common/ingredient';
   providedIn: 'root',
 })
 export class DietsService {
-  private crudDiteUrl = 'https://spring-recipe-app-backend.herokuapp.com/diet';
-  private dietUrl = 'https://spring-recipe-app-backend.herokuapp.com/api/diet';
-  private userUrl = 'https://spring-recipe-app-backend.herokuapp.com/api/users';
-  private findIngredientUrl = 'https://spring-recipe-app-backend.herokuapp.com/dietingredient';
+  private crudDiteUrl = 'http://localhost:8080/diet';
+  private dietUrl = 'http://localhost:8080/api/diet';
+  private userUrl = 'http://localhost:8080/api/users';
+  private findIngredientUrl = 'http://localhost:8080/dietingredient';
 
   constructor(private httpClient: HttpClient) { }
 

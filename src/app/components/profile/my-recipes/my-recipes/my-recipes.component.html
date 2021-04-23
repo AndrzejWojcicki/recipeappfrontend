@@ -7,6 +7,7 @@
     <br />
     <p style="color: white">Proszę czekać...</p>
   </ngx-spinner>
+  <div class="row text-center"><h2>Twoje Przepisy:</h2></div>
   <div class="row text-center">
     <div class="col-lg-4 col-md-6 mb-4" *ngFor="let recipe of recipes; let i = index">
       <div class="card h-100">
@@ -56,4 +57,4 @@
     Nie dodano żadnych przepisów :(
   </div>
 </div>
-<ng-template #loggedOut> Zaloguj się !</ng-template>
+<ng-template #loggedOut><br><div class="col-md-12 alert alert-warning mt-3 text-center">Zaloguj się!</div></ng-template>

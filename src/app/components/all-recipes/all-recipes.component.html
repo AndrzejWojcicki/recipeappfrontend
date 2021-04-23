@@ -1,0 +1,104 @@
+<ngx-spinner type="la-square-jelly-box" size="default" bdColor="rgba(51, 51, 51, 0.8)">
+  <div style="color: #64d6e2" class="la-square-jelly-box la-3x">
+    <div></div>
+    <div></div>
+  </div>
+  <br />
+  <p style="color: white">Proszę czekać...</p>
+</ngx-spinner>
+<div class="row text-center">
+  <div class="col-lg-4 col-md-6 mb-4" *ngFor="let recipe of recipes; let i = index">
+    <div class="card h-100">
+      <a routerLink="/przepisy/{{recipe.id}}"><img *ngIf="recipe.imageUrl !== null" class="card-img-top"
+          style="max-height: 220px; width: auto; max-width: 320px;" [src]="recipe.imageUrl" alt="" />
+        <img *ngIf="recipe.imageUrl === null" class="card-img-top" style="max-height: 220px; width: auto; max-width: 320px;"
+          [src]="'assets/images/noimage.png'" alt="" />
+      </a>
+      <div class="card-body">
+        <h4 class="card-title">
+          <a routerLink="/przepisy/{{recipe.id}}">{{recipe.name}}</a>
+        </h4>
+        <div class="row">
+          <div class="col">
+            <i class="far fa-clock"></i>
+            <p>{{recipe.preparationTime}} min</p>
+          </div>
+          <div class="col">
+            <div *ngIf="isEasy(recipe.difficulty)">
+              <i class="fas fa-utensils"></i>
+              <div>
+                <p>łatwe</p>
+              </div>
+            </div>
+            <div *ngIf="isMedium(recipe.difficulty)">
+              <i class="fas fa-utensils"></i>
+              <div>
+                <p>średnie</p>
+              </div>
+            </div>
+            <div *ngIf="isHard(recipe.difficulty)">
+              <i class="fas fa-utensils"></i>
+              <div>
+                <p>trudne</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div *ngIf="0.5 > avgRatings[recipe.id]">
+          <small class="text-muted">&#9734; &#9734; &#9734; &#9734; &#9734;</small>
+        </div>
+        <div *ngIf=" 0.5 < avgRatings[recipe.id] && avgRatings[recipe.id] < 1.5">
+          <small class="text-muted">&#9733; &#9734; &#9734; &#9734; &#9734;</small>
+        </div>
+        <div *ngIf=" 1.5 <= avgRatings[recipe.id] && avgRatings[recipe.id] < 2.5">
+          <small class="text-muted">&#9733; &#9733; &#9734; &#9734; &#9734;</small>
+        </div>
+        <div *ngIf=" 2.5 <= avgRatings[recipe.id] && avgRatings[recipe.id] < 3.5">
+          <small class="text-muted">&#9733; &#9733; &#9733; &#9734; &#9734;</small>
+        </div>
+        <div *ngIf=" 3.5 <= avgRatings[recipe.id] && avgRatings[recipe.id] < 4.5">
+          <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+        </div>
+        <div *ngIf="4.5 <= avgRatings[recipe.id]">
+          <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9733;</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="recipes?.length == 0 " class="col-md-12 alert alert-warning mt-3">
+  Nie znaleziono przepisów :(
+</div>
+
+<!-- pagination -->
+
+<div *ngIf="recipes?.length > 0">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <span class="mr-2">Rozmiar strony:</span>
+        </div>
+        <div class="col-md-8">
+          <select (change)="updatePageSize($event.target.value)" class="form-control-sm" style="width: 20%">
+            <option selected>6</option>
+            <option>12</option>
+            <option>24</option>
+            <option>48</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- handle pagination -->
+    <div class="col-md-6">
+      <ngb-pagination [(page)]="currentPage" [pageSize]="pageSize" [collectionSize]="totalRecords"
+        (pageChange)="listRecipes()" class="d-flex justify-content-end">
+        <ng-template ngbPaginationPrevious>Poprzednia</ng-template>
+        <ng-template ngbPaginationNext>Następna</ng-template>
+      </ngb-pagination>
+    </div>
+  </div>
+</div>
+<br />

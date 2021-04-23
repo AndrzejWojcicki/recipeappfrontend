@@ -6,6 +6,7 @@ import { User } from 'src/app/common/user';
 import { TokenStorageService } from 'src/app/services/authentication/token-storage.service';
 import { UserDetailsService } from 'src/app/services/userdetails.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-caloric-balance',
@@ -45,9 +46,12 @@ export class CaloricBalanceComponent implements OnInit {
     private userDetials: UserDetailsService,
     private dietService: DietsService,
     private router: Router,
+    // tslint:disable-next-line: variable-name
+    private _spinnerService: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
+    this._spinnerService.show();
     this.currentUser = this.token.getUser();
     this.getUserInfo();
     this.getRecipeIngredientsAmount();
@@ -68,18 +72,15 @@ export class CaloricBalanceComponent implements OnInit {
         a.id > b.id ? 1 : -1
       );
       this.tempIA = data;
+      if (this.tempIA.length === 0) {
+        this._spinnerService.hide();
+      }
       this.tempIA.forEach((amount) =>
         // tslint:disable-next-line: no-shadowed-variable
         this.dietService.getIngredient(amount.id).subscribe((ingredient) => {
           this.dietService.getDietIngredientId(amount.id, ingredient.id).subscribe((userDietPack) => {
             this.tempArray.push(userDietPack);
-            this.tempArray.sort((a, b) => // tslint:disable-next-line: no-unused-expression
-              // tslint:disable-next-line: no-unused-expression
-              // tslint:disable-next-line: no-unused-expression
-              // tslint:disable-next-line: no-unused-expression
-              // tslint:disable-next-line: no-unused-expression
-              // tslint:disable-next-line: no-unused-expression
-              // tslint:disable-next-line: no-unused-expression
+            this.tempArray.sort((a, b) =>
               (a.diet.id > b.diet.id) ? 1 : -1);
             // tslint:disable-next-line: no-shadowed-variable
             this.calculate(userDietPack.ingredient, userDietPack.diet);
@@ -87,6 +88,7 @@ export class CaloricBalanceComponent implements OnInit {
             this.procProteins = Math.round((this.totalProteins / this.user.proteins) * 100);
             this.procFat = Math.round((this.totalFat / this.user.fat) * 100);
             this.procCarbs = Math.round((this.totalCarbs / this.user.carbohydrates) * 100);
+            this._spinnerService.hide();
           });
         })
       );
@@ -222,6 +224,6 @@ export class CaloricBalanceComponent implements OnInit {
   }
 
   goToUserEdit(): void {
-    this.router.navigateByUrl('profil/edit/' + this.currentUser.id);
+    this.router.navigateByUrl('profil/editkalorii/' + this.currentUser.id);
   }
 }

@@ -1,0 +1,152 @@
+<div *ngIf="currentUser; else loggedOut">
+  <div class="row" *ngIf="ownProfile; else notAuthor">
+    <div class="col"></div>
+    <div class="col-12">
+      <br />
+      <div class="card card-container align-items-center">
+        <i class="fas fa-weight fa-7x"></i>
+        <h1>Ustaw kalorykę</h1>
+        <br />
+
+        <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+          <div class="form-group">
+            <label for="userName">Nazwa użytkownika</label> <br>
+
+            <input type="text" class="form-control" name="userName" [(ngModel)]="form.userName" required minlength="3"
+              maxlength="20" #username="ngModel" readonly/>
+          </div>
+          <div class="form-group">
+            <label for="calories">Limit kalorii na dzień</label>
+            <div id="chart" *ngIf="this.calProc > 0 && form.calories !== null && form.fat !== null
+              && form.proteins !== null && form.carbohydrates !== null">
+              <apx-chart
+                [series]="chartOptions.series"
+                [chart]="chartOptions.chart"
+                [labels]="chartOptions.labels"
+                [responsive]="chartOptions.responsive"
+              ></apx-chart>
+            </div>
+            <div *ngIf="this.form.calories"><a (click)="setExampleCalories()"><small>Ustaw standardowy podział</small></a></div>
+            <div style="display: inline-flex;">
+              <div *ngIf="this.calProc > 0 && form.calories !== null && form.fat !== null
+              && form.proteins !== null && form.carbohydrates !== null">
+                <small>
+                 {{calProc}} %
+                </small>
+              </div>
+            </div>
+            <input type="number" min="20" class="form-control" proc="100" pattern="^\d*$" name="calories" [(ngModel)]="form.calories" optional calories
+            (ngModelChange)="caloriesChange($event)"
+            (ngModelChange)="valueChange($event)"
+              #calories="ngModel" />
+              <div class="alert-danger" role="alert" *ngIf="f.submitted && calories.invalid">
+                <div *ngIf="calories.errors.pattern">
+                  Zły format danych
+                </div>
+              </div>
+              <div class="alert-danger" role="alert" *ngIf="f.submitted && form.calories < 1000">
+                Minimum kalorii to 1000
+              </div>
+              <div class="alert-danger" role="alert" *ngIf="f.submitted && proc">
+                Suma Kalorii musi wynosić 100%
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="proteins">Limit gram białka na dzień</label>
+            <div *ngIf="this.form.calories > 0 && this.calProc > 0 && form.calories !== null && form.fat !== null
+              && form.proteins !== null && form.carbohydrates !== null">
+              <small>
+                {{calProt}} %
+                &nbsp; <a type="button" (click)="addPercentP()" ><i class="fas fa-plus"></i></a>
+                &nbsp; <a type="button" (click)="minusPercentP()" ><i class="fas fa-minus"></i></a>
+              </small>
+            </div>
+            <input type="number" class="form-control" pattern="^\d*$" min=0 name="proteins" [(ngModel)]="form.proteins" optional proteins
+            (ngModelChange)="caloriesChange($event)"
+            (ngModelChange)="valueChange($event)"
+              #proteins="ngModel" />
+              <div class="alert-danger" role="alert" *ngIf="f.submitted && proteins.invalid">
+                <div *ngIf="proteins.errors.pattern">
+                  Zły format danych
+                </div>
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="fat">Limit gram tłuszczu na dzień</label>
+            <div *ngIf="this.form.calories > 0 && this.calProc > 0 && form.calories !== null && form.fat !== null
+              && form.proteins !== null && form.carbohydrates !== null">
+              <small>
+                {{calFat}} %
+                &nbsp; <a type="button" (click)="addPercentF()" ><i class="fas fa-plus"></i></a>
+                &nbsp; <a type="button" (click)="minusPercentF()" ><i class="fas fa-minus"></i></a>
+              </small>
+            </div>
+            <input type="number" min="0" pattern="^\d*$" class="form-control" name="fat" [(ngModel)]="form.fat" optional fat
+            (ngModelChange)="caloriesChange($event)"
+            (ngModelChange)="valueChange($event)"
+              #fat="ngModel" />
+              <div class="alert-danger" role="alert" *ngIf="f.submitted && fat.invalid">
+                <div *ngIf="fat.errors.pattern">
+                  Zły format danych
+                </div>
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="carbohydrates">Limit gram węglowodanów na dzień</label>
+            <div *ngIf="this.form.calories > 0 && this.calProc > 0 && form.calories !== null && form.fat !== null
+              && form.proteins !== null && form.carbohydrates !== null">
+              <small>
+                {{calCarb}} %
+                &nbsp; <a type="button" (click)="addPercentW()" ><i class="fas fa-plus"></i></a>
+                &nbsp; <a type="button" (click)="minusPercentW()" ><i class="fas fa-minus"></i></a>
+              </small>
+            </div>
+            <input type="number" pattern="^\d*$" class="form-control" min="0" name="carbohydrates" [(ngModel)]="form.carbohydrates" optional carbohydrates
+            (ngModelChange)="caloriesChange($event)"
+            (ngModelChange)="valueChange($event)"
+              #carbohydrates="ngModel" />
+              <div class="alert-danger" role="alert" *ngIf="f.submitted && carbohydrates.invalid">
+                <div *ngIf="carbohydrates.errors.pattern">
+                  Zły format danych
+                </div>
+              </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <div class="form-group">
+              <button class="btn btn-primary btn-block">Edytuj</button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <div class="form-group">
+              <button class="btn btn-primary btn-block" [routerLink]="'/profil'">
+                Powrót
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="alert alert-warning text-center" *ngIf="f.submitted && isEditFailed">
+              Edycja się nie powiodła! Wprowadź nowe dane.<br />
+            </div>
+          </div>
+        </form>
+        <div *ngIf="isSuccessful">
+          <div class="alert alert-success text-center">Edycja powiodła się!</div>
+          <div class="d-flex justify-content-center">
+            <div class="form-group">
+              <a [routerLink]="'/profil'" class="justify-content-center align-self-center">
+                <button class="btn btn-primary btn-block">
+                  Powrót
+                </button>
+                <br /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
+<ng-template #loggedOut><br><div class="col-md-12 alert alert-warning mt-3 text-center">Zaloguj się !</div> </ng-template>
+<ng-template #notAuthor><br><div class="col-md-12 alert alert-warning mt-3 text-center">To nie twój profil!</div></ng-template>

@@ -44,10 +44,17 @@
         <br>
         <p class="text-center">Dodawanie powiodło się! </p>
         <div class="d-flex justify-content-center">
+          <button (click)="addIngredient()" class="btn btn-success btn-sm">
+            Dodaj składniki
+          </button>
+        </div>
+        <br>
+        <div class="d-flex justify-content-center">
           <button (click)="returnToRecipe()" class="btn btn-secondary btn-sm">
             Wróć do przepisu
           </button>
         </div>
+
       </div>
       <div *ngIf="isSubmitted && isFailed">
         <br>

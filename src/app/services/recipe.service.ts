@@ -15,12 +15,13 @@ import { Ingredient } from '../common/ingredient';
   providedIn: 'root',
 })
 export class RecipeService {
-  private recipesUrl = 'https://spring-recipe-app-backend.herokuapp.com/api/recipes';
-  private categoryUrl = 'https://spring-recipe-app-backend.herokuapp.com/api/recipe-Category';
-  private commentAuthorUrl = 'https://spring-recipe-app-backend.herokuapp.com/api/recipe-comments';
-  private recipeIngredientUrl = 'https://spring-recipe-app-backend.herokuapp.com/api/recipe-ingredients';
-  private manageRecipe = 'https://spring-recipe-app-backend.herokuapp.com/recipes';
-  private getIngredients = 'https://spring-recipe-app-backend.herokuapp.com/recipeingredient';
+  private recipesUrl = 'http://localhost:8080/api/recipes';
+  private categoryUrl = 'http://localhost:8080/api/recipe-Category';
+  private commentAuthorUrl = 'http://localhost:8080/api/recipe-comments';
+  private recipeIngredientUrl = 'http://localhost:8080/api/recipe-ingredients';
+  private manageRecipe = 'http://localhost:8080/recipes';
+  private getIngredients = 'http://localhost:8080/recipeingredient';
+  private getRecipeUrl = 'http://localhost:8080/recipe/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -38,6 +39,18 @@ export class RecipeService {
     return this.httpClient
       .get<GetResponseRecipe>(searchUrl)
       .pipe(map((response) => response._embedded.recipes));
+  }
+
+  getAllRecipes(currentPage: number, pageSize: number): Observable<GetResponseRecipe> {
+    const paginationUrl = `${this.recipesUrl}?page=${currentPage}&size=${pageSize}`;
+    return this.httpClient
+      .get<GetResponseRecipe>(paginationUrl);
+  }
+
+  getRecipe(id: number): Observable<Recipe> {
+    const recipeUrl = `${this.getRecipeUrl}${id}`;
+    return this.httpClient
+      .get<Recipe>(recipeUrl);
   }
 
   getRecipeCategory(): Observable<RecipeCategory[]> {

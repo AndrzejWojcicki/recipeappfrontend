@@ -29,10 +29,9 @@ registerLocaleData(localePl, 'pl');
 export class RecipeDetailsComponent implements OnInit {
   recipe: Recipe = new Recipe();
   steps: RecipeSteps[] = new Array();
-  comments: Comment[];
+  comments: Comment[] = new Array();
   authorofComment: User;
   authorofRecipe: string;
-  authorsOfComments: string[] = new Array();
   ratings: Rating[] = new Array();
   total = 0;
   avgRatings: number;
@@ -142,12 +141,19 @@ export class RecipeDetailsComponent implements OnInit {
     const id: number = +this._activatedRoute.snapshot.paramMap.get('id');
     // tslint:disable-next-line: deprecation
     this._recipeService.getRecipeComments(id).subscribe((data) => {
-      data.sort((a: Comment, b: Comment) =>
-        a.dateCreated > b.dateCreated ? 1 : -1
-      );
-      this.comments = data;
-      this.comments.forEach((comment) =>
+      data.forEach((comment) =>
         this.getCommentAuthor(comment.comment_id)
+      );
+    });
+  }
+
+  // tslint:disable-next-line: typedef
+  getCommentAuthor(commentId: number) {
+    // tslint:disable-next-line: deprecation
+    this.commentService.getComment(commentId).subscribe((data) => {
+      this.comments.push(data);
+      this.comments.sort((a: Comment, b: Comment) =>
+        a.dateCreated > b.dateCreated ? 1 : -1
       );
     });
   }
@@ -244,14 +250,6 @@ export class RecipeDetailsComponent implements OnInit {
     );
   }
 
-  // tslint:disable-next-line: typedef
-  getCommentAuthor(commentId: number) {
-    // tslint:disable-next-line: deprecation
-    this._recipeService.getCommentsAuthor(commentId).subscribe((data) => {
-      this.authorofComment = data;
-      this.authorsOfComments.push(this.authorofComment.userName);
-    });
-  }
 
   // tslint:disable-next-line: typedef
   getRecipeAuthor() {
@@ -279,6 +277,9 @@ export class RecipeDetailsComponent implements OnInit {
         a.id > b.id ? 1 : -1
       );
       this.tempIA = data;
+      if (this.tempIA.length === 0) {
+        this._spinnerService.hide();
+      }
       this.tempIA.forEach((ingredient) =>
         // tslint:disable-next-line: no-shadowed-variable
         this._recipeService.getIngredient(ingredient.id).subscribe((data) => {
@@ -293,6 +294,7 @@ export class RecipeDetailsComponent implements OnInit {
         })
       );
     });
+
   }
 
   // tslint:disable-next-line: typedef

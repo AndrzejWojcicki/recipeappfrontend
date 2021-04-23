@@ -20,12 +20,10 @@
     </div>
     <br />
     <small style="display: block;"class="text-muted" *ngIf="recipe.dateUpdated === null">Dodane przez {{ authorofRecipe }} dnia
-      {{ recipe.dateCreated | date: "mediumDate":"+0200":"pl" }}. Ilość ocen:
-      {{ ratings.length }}</small>
+      {{ recipe.dateCreated | date: "mediumDate":"+0200":"pl" }}</small>
     <small class="text-muted" *ngIf="recipe.dateCreated === null">Dodane przez {{ authorofRecipe }} ostatnio
       zmodyfikowano dnia
-      {{ recipe.dateUpdated | date: "mediumDate":"+0200":"pl" }}. Ilość ocen:
-      {{ ratings.length }}</small>
+      {{ recipe.dateUpdated | date: "mediumDate":"+0200":"pl" }}</small>
     <div class="card mt-4">
       <img class="card-img-top img-fluid" src="{{ recipe.imageUrl }}" alt="" />
       <div class="card-body">
@@ -56,30 +54,30 @@
           </div>
           <div class="col text-center">
             <div *ngIf="0.5 > avgRatings">
-              <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i
-                class="far fa-star"></i><i class="far fa-star"></i>
+              <i class="far fa-star"></i>&nbsp;<i class="far fa-star"></i>&nbsp;<i class="far fa-star"></i>&nbsp;<i
+                class="far fa-star"></i>&nbsp;<i class="far fa-star"></i>
             </div>
             <div *ngIf="0.5 < avgRatings && avgRatings < 1.5">
-              <i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i
-                class="far fa-star"></i><i class="far fa-star"></i>
+              <i class="fas fa-star"></i>&nbsp;<i class="far fa-star"></i>&nbsp;<i class="far fa-star"></i>&nbsp;<i
+                class="far fa-star"></i>&nbsp;<i class="far fa-star"></i>
             </div>
             <div *ngIf="1.5 <= avgRatings && avgRatings < 2.5">
-              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i
-                class="far fa-star"></i><i class="far fa-star"></i>
+              <i class="fas fa-star"></i>&nbsp;<i class="fas fa-star"></i>&nbsp;<i class="far fa-star"></i>&nbsp;<i
+                class="far fa-star"></i>&nbsp;<i class="far fa-star"></i>
             </div>
             <div *ngIf="2.5 <= avgRatings && avgRatings < 3.5">
-              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                class="far fa-star"></i><i class="far fa-star"></i>
+              <i class="fas fa-star"></i>&nbsp;<i class="fas fa-star"></i>&nbsp;<i class="fas fa-star"></i>&nbsp;<i
+                class="far fa-star"></i>&nbsp;<i class="far fa-star"></i>
             </div>
             <div *ngIf="3.5 <= avgRatings && avgRatings < 4.5">
-              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                class="fas fa-star"></i><i class="far fa-star"></i>
+              <i class="fas fa-star"></i>&nbsp;<i class="fas fa-star"></i>&nbsp;<i class="fas fa-star"></i>&nbsp;<i
+                class="fas fa-star"></i>&nbsp;<i class="far fa-star"></i>
             </div>
             <div *ngIf="4.5 <= avgRatings">
-              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                class="fas fa-star"></i><i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>&nbsp;<i class="fas fa-star"></i>&nbsp;<i class="fas fa-star"></i>&nbsp;<i
+                class="fas fa-star"></i>&nbsp;<i class="fas fa-star"></i>
             </div>
-            <p>Śr. ocena ({{ avgRatings }})</p>
+            <p>Liczba ocen {{ ratings.length }}</p>
           </div>
         </div>
         <div class="col text-center">
@@ -156,10 +154,10 @@
         <div *ngFor="let comment of comments; let i = index">
           <p>{{ comment.message }}</p>
           <div class="row">
-            <div class="col"><small class="text-muted">Dodane przez {{ authorsOfComments[i] }} dnia
+            <div class="col"><small class="text-muted">Dodane przez {{ comment.author.userName }} dnia
                 {{ comment.dateCreated | date: "mediumDate":"+0200":"pl" }}</small></div>
             <div class="col">
-              <div *ngIf="isLoggedIn  && username === authorsOfComments[i]">
+              <div *ngIf="isLoggedIn  && username === comment.author.userName">
                 <button type="button" class="close" aria-label="Close"
                   (click)="deleteComment(comment.comment_id)">&times;</button>
               </div>

@@ -1,9 +1,10 @@
 <div class="row">
   <div class="col"></div>
-  <div class="col-12">
+  <div class="col-12 container" *ngIf="!currentUser; else loggedIn">
     <br />
     <div class="card card-container align-items-center">
-      <i class="fas fa-user-circle fa-7x"></i>
+      <br>
+      <i class="fas fa-user-plus fa-7x"></i>
       <h1>Rejestracja</h1>
       <br />
       <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
@@ -76,3 +77,4 @@
   </div>
   <div class="col"></div>
 </div>
+<ng-template #loggedIn > <br><div class="col-md-12 alert alert-warning mt-3 text-center">Posiadasz już konto!</div> </ng-template>

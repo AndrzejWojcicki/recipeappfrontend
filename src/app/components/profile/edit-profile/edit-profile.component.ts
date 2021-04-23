@@ -16,7 +16,7 @@ export class EditProfileComponent implements OnInit {
   isEditFailed = false;
   errorMessage = '';
   user: User = new User();
-
+  ownProfile = false;
   proc = false;
 
   // percentages
@@ -36,39 +36,35 @@ export class EditProfileComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.tokenStorage.getUser();
     this.getUserInfo();
+    if (this.currentUser) {
+      this.checkAuthor();
+    }
+  }
+
+  checkAuthor(): void {
+    const id: number = +this._activatedRoute.snapshot.paramMap.get('id');
+    this.userDetailsService.getUser(id).subscribe(
+      (data) => {
+        if (data.user_id === this.currentUser.id) {
+          this.ownProfile = true;
+        }
+      }
+    );
   }
 
   onSubmit(): void {
-    console.log(this.calProc);
-    const regex = new RegExp(/^\d*$/);
-    if (!regex.test(this.form.calories) && this.form.calories !== null) {
-      this.form.calories.invalid = true;
-      this.form.calories.errors.pattern = true;
-    } else if (!regex.test(this.form.fat) && this.form.fat !== null) {
-      this.form.fat.invalid = true;
-      this.form.fat.errors.pattern = true;
-    } else if (!regex.test(this.form.carbohydrates) && this.form.carbohydrates !== null) {
-      this.form.carbohydrates.invalid = true;
-      this.form.carbohydrates.errors.pattern = true;
-    } else if (!regex.test(this.form.proteins) && this.form.proteins !== null) {
-      this.form.proteins.invalid = true;
-      this.form.proteins.errors.pattern = true;
-    } else if (this.calProc !== 100 && this.form.calories !== null) {
-      this.proc = true;
-    } else {
-      const id: number = +this._activatedRoute.snapshot.paramMap.get('id');
-      // tslint:disable-next-line: deprecation
-      this.userDetailsService.updateUser(id, this.form).subscribe(
-        (data) => {
-          this.isSuccessful = true;
-          this.isEditFailed = false;
-        },
-        (err) => {
-          this.errorMessage = err.error.message;
-          this.isEditFailed = true;
-        }
-      );
-    }
+    const id: number = +this._activatedRoute.snapshot.paramMap.get('id');
+    // tslint:disable-next-line: deprecation
+    this.userDetailsService.updateUser(id, this.form).subscribe(
+      (data) => {
+        this.isSuccessful = true;
+        this.isEditFailed = false;
+      },
+      (err) => {
+        this.errorMessage = err.error.message;
+        this.isEditFailed = true;
+      }
+    );
   }
 
   getUserInfo(): void {

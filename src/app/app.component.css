@@ -1,3 +1,7 @@
 .allButFooter {
   min-height: calc(88vh - 40px);
 }
+
+.app {
+  background-color: #F5F5F5;
+}

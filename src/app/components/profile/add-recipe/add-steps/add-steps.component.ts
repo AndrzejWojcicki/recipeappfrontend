@@ -132,5 +132,7 @@ export class AddStepsComponent implements OnInit {
   returnToRecipe(): void {
     this.router.navigateByUrl('przepisy/' + this.addedRecipeId);
   }
-
+  addIngredient(): void {
+    this.router.navigateByUrl('profil/dodajskladnik/' + this.addedRecipeId);
+  }
 }

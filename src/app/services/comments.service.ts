@@ -1,3 +1,4 @@
+import { Comment } from 'src/app/common/comment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -6,9 +7,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CommentsService {
-  private comentUrl = 'https://spring-recipe-app-backend.herokuapp.com/comments';
+  private comentUrl = 'http://localhost:8080/comments';
 
   constructor(private httpClient: HttpClient) { }
+
+  getComment(id: number): Observable<Comment> {
+    return this.httpClient.get<Comment>(`${this.comentUrl}/${id}`);
+  }
 
   addComent(data): Observable<object> {
     return this.httpClient.post(`${this.comentUrl}`, data);

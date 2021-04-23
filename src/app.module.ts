@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 import { AppComponent } from './app/app.component';
 import { RecipeListComponent } from './app/components/recipe-list/recipe-list.component';
@@ -44,12 +45,19 @@ import { IngredientsToDietResultComponent } from './app/components/caloric-balan
 import { IngredientToDatabseComponent } from './app/components/caloric-balance/add-ingredient-to-diet/ingredients-to-diet-result/ingredient-to-databse/ingredient-to-databse.component';
 import { EditDietComponent } from './app/components/caloric-balance/edit-diet/edit-diet.component';
 import { FAQUnitComponent } from './app/components/faq-unit/faq-unit.component';
+import { AllRecipesComponent } from './app/components/all-recipes/all-recipes.component';
+import { EditCaloriesComponent } from './app/components/profile/edit-calories/edit-calories.component';
+import { ResetPasswordComponent } from './app/components/reset-password/reset-password.component';
+import { ChangePasswordComponent } from './app/components/reset-password/change-password/change-password.component';
 
 const routes: Routes = [
+  { path: 'przepisy/wszystkie', component: AllRecipesComponent },
   { path: 'przepisy/:id', component: RecipeDetailsComponent },
   { path: 'przepisy', component: HomepageComponent },
   { path: 'zaloguj', component: LoginComponent },
   { path: 'zarejestruj', component: RegisterComponent },
+  { path: 'reset/reset_password/token/:token', component: ChangePasswordComponent },
+  { path: 'reset', component: ResetPasswordComponent },
   { path: 'profil/mojeprzepisy/edytuj/skladnik/:id/przepis/:recipeId', component: EditIngredientsComponent },
   { path: 'profil/mojeprzepisy/edytuj/kroki/:id/przepis/:recipeId', component: EditStepComponent },
   { path: 'profil/mojeprzepisy/edytuj/:id', component: EditRecipeComponent },
@@ -60,6 +68,7 @@ const routes: Routes = [
   { path: 'profil/dodajkroki/:id', component: AddStepsComponent },
   { path: 'profil/edytujkroki/:id', component: EditStepsComponent },
   { path: 'profil/edit/:id', component: EditProfileComponent },
+  { path: 'profil/editkalorii/:id', component: EditCaloriesComponent },
   { path: 'profil/dodajprzepis', component: AddRecipeComponent },
   { path: 'profil/mojeprzepisy', component: MyRecipesComponent },
   { path: 'profil/lista-zakupow/:id', component: EditDialogComponent },
@@ -111,7 +120,11 @@ const routes: Routes = [
     IngredientsToDietResultComponent,
     IngredientToDatabseComponent,
     EditDietComponent,
-    FAQUnitComponent
+    FAQUnitComponent,
+    AllRecipesComponent,
+    EditCaloriesComponent,
+    ResetPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -124,7 +137,8 @@ const routes: Routes = [
     FormsModule,
     NgbModule,
     DragDropModule,
-    MatDialogModule
+    MatDialogModule,
+    NgApexchartsModule
   ],
   providers: [RecipeService, authInterceptorProviders],
   bootstrap: [AppComponent],

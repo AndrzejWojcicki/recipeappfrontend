@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class StepsService {
 
-  private stepUrl = 'https://spring-recipe-app-backend.herokuapp.com/steps';
-  private getStepUrl = 'https://spring-recipe-app-backend.herokuapp.com/api/recipe-steps';
+  private stepUrl = 'http://localhost:8080/steps';
+  private getStepUrl = 'http://localhost:8080/api/recipe-steps';
 
   constructor(private httpClient: HttpClient) { }
 

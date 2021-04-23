@@ -1,6 +1,7 @@
 h1,
 a,
-h5 {
+h5,
+h2 {
   -webkit-text-stroke: 1px rgb(17, 90, 45);
   color: white;
   text-shadow:
@@ -9,4 +10,47 @@ h5 {
     1px -1px 0 #000,
     -1px 1px 0 #000,
     1px 1px 0 #000;
+}
+
+.allimg {
+  display: inline-block;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border: solid;
+  border-radius: 50%;
+}
+
+.allimg img {
+  width: auto;
+  height: 100%;
+  transition: transform .4s;
+}
+
+.recipes {
+  max-width: 250px;
+  max-height: 175px;
+  width: auto;
+  height: 100%;
+  transition: transform .4s;
+}
+
+.centered {
+  margin-top: 45px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.5);
+  /* IE 9 */
+  -webkit-transform: scale(1.5);
+  /* Safari 3-8 */
+  transform: scale(1.5);
+}
+
+.move {
+  margin-top: 10px;
 }
