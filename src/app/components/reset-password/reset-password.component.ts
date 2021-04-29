@@ -14,7 +14,7 @@ export class ResetPasswordComponent implements OnInit {
   isResetFailed = false;
   errorMessage = '';
   roles: string[] = [];
-  resetUrl = 'http://localhost:4200/reset/reset_password';
+  resetUrl = 'https://spring-recipe-app-backend.herokuapp.com/reset/reset_password';
 
   constructor(
     private userService: UserDetailsService,

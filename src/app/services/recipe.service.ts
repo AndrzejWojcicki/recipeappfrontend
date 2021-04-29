@@ -21,7 +21,7 @@ export class RecipeService {
   private recipeIngredientUrl = 'https://spring-recipe-app-backend.herokuapp.com/api/recipe-ingredients';
   private manageRecipe = 'https://spring-recipe-app-backend.herokuapp.com/recipes';
   private getIngredients = 'https://spring-recipe-app-backend.herokuapp.com/recipeingredient';
-  private getRecipeUrl = 'https://spring-recipe-app-backend.herokuapp.com/recipe';
+  private getRecipeUrl = 'https://spring-recipe-app-backend.herokuapp.com/recipe/';
 
   constructor(private httpClient: HttpClient) { }
 
