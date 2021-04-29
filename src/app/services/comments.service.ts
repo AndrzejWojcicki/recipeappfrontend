@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CommentsService {
-  private comentUrl = 'http://localhost:8080/comments';
+  private comentUrl = 'https://spring-recipe-app-backend.herokuapp.com/comments';
 
   constructor(private httpClient: HttpClient) { }
 

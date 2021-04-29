@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col text-center" *ngIf="!this.user.calories">
+          <div class="col text-center" *ngIf="!this.user.calories && !this.user.proteins && !this.user.fat && !this.user.carbohydrates">
             <p><a (click)="goToUserEdit()">Limity możesz ustawić w edycji użytkownika</a>
             </p>
           </div>

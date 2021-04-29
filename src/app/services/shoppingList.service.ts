@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ShoppingListService {
-  private listUrl = 'http://localhost:8080/shoppingList';
-  private getusersUrl = 'http://localhost:8080/api/users/';
-  private listItemURL = 'http://localhost:8080/api/shoppingList/';
+  private listUrl = 'https://spring-recipe-app-backend.herokuapp.com/shoppingList';
+  private getusersUrl = 'https://spring-recipe-app-backend.herokuapp.com/api/users/';
+  private listItemURL = 'https://spring-recipe-app-backend.herokuapp.com/api/shoppingList/';
 
   constructor(private httpClient: HttpClient) { }
 

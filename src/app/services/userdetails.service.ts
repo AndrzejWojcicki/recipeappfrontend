@@ -10,13 +10,13 @@ import { map } from 'rxjs/operators';
 })
 export class UserDetailsService {
   private userDataUrl =
-    'http://localhost:8080/api/users/search/findByUserName?userName=';
-  private userEditUrl = 'http://localhost:8080/users/';
-  private userRecipesUrl = 'http://localhost:8080/api/users';
-  private userDietUrl = 'http://localhost:8080/users/diet';
-  private resetPasswordUrl = 'http://localhost:8080/users/reset';
-  private checkPasswordTokenUrl = 'http://localhost:8080/users/passwordToken';
-  private changePasswordTokenUrl = 'http://localhost:8080/users/password';
+    'https://spring-recipe-app-backend.herokuapp.com/api/users/search/findByUserName?userName=';
+  private userEditUrl = 'https://spring-recipe-app-backend.herokuapp.com/users/';
+  private userRecipesUrl = 'https://spring-recipe-app-backend.herokuapp.com/api/users';
+  private userDietUrl = 'https://spring-recipe-app-backend.herokuapp.com/users/diet';
+  private resetPasswordUrl = 'https://spring-recipe-app-backend.herokuapp.com/users/reset';
+  private checkPasswordTokenUrl = 'https://spring-recipe-app-backend.herokuapp.com/users/passwordToken';
+  private changePasswordTokenUrl = 'https://spring-recipe-app-backend.herokuapp.com/users/password';
 
   constructor(private httpClient: HttpClient) { }
 

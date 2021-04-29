@@ -19,8 +19,9 @@ export class RecipeListComponent implements OnInit {
   // tslint:disable-next-line: no-inferrable-types
   searchMode: boolean = false;
   // tslint:disable-next-line: no-inferrable-types
+  filterMode: boolean = false;
+  // tslint:disable-next-line: no-inferrable-types
   previousCategory: number = 1;
-  temp: unknown;
 
   // new properties for server side paging
   // tslint:disable-next-line: no-inferrable-types
@@ -63,8 +64,11 @@ export class RecipeListComponent implements OnInit {
     // starts the spinner
     this._spinnerService.show();
     this.searchMode = this._activatedRoute.snapshot.paramMap.has('keyword');
-    if (this.searchMode) {
+    this.filterMode = this._activatedRoute.snapshot.paramMap.has('filtr');
+    if (this.searchMode && !this.filterMode) {
       this.handleSearchRecipes();
+    } else if (this.filterMode) {
+      this.handleFiltrRecipes();
     } else {
       this.handleListRecipes();
     }
@@ -126,6 +130,19 @@ export class RecipeListComponent implements OnInit {
     );
     this._recipeService
       .searchRecipes(keyword, this.currentPage - 1, this.pageSize)
+      .subscribe(this.processPaginate());
+  }
+
+  // tslint:disable-next-line: typedef
+  handleFiltrRecipes() {
+    const keyword: string = this._activatedRoute.snapshot.paramMap.get(
+      'keyword'
+    );
+    const filtr: string = this._activatedRoute.snapshot.paramMap.get(
+      'filtr'
+    );
+    this._recipeService
+      .searchFilterRecipes(keyword, filtr, this.currentPage - 1, this.pageSize)
       .subscribe(this.processPaginate());
   }
 

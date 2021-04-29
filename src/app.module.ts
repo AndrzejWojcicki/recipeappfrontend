@@ -81,6 +81,7 @@ const routes: Routes = [
   { path: 'profil', component: ProfileComponent },
   { path: 'FAQ-zdjecia', component: ImageUploadComponent },
   { path: 'FAQ-jednostki', component: FAQUnitComponent },
+  { path: 'szukaj/:keyword/:filtr', component: RecipeListComponent },
   { path: 'szukaj/:keyword', component: RecipeListComponent },
   { path: 'kategoria/:id', component: RecipeListComponent },
   { path: '', redirectTo: '/przepisy', pathMatch: 'full' },

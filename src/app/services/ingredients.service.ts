@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
 })
 export class IngredientsService {
 
-  private baseSearchUrl = 'http://localhost:8080/api/ingredients/search/search?name=';
-  private manageIngredientAmountUrl = 'http://localhost:8080/amountsOfIngredients';
-  private addIngredientUrl = 'http://localhost:8080/ingredients';
-  private ingredientAmountInfoUrl = 'http://localhost:8080/api/recipe-ingredients';
+  private baseSearchUrl = 'https://spring-recipe-app-backend.herokuapp.com/api/ingredients/search/search?name=';
+  private manageIngredientAmountUrl = 'https://spring-recipe-app-backend.herokuapp.com/amountsOfIngredients';
+  private addIngredientUrl = 'https://spring-recipe-app-backend.herokuapp.com/ingredients';
+  private ingredientAmountInfoUrl = 'https://spring-recipe-app-backend.herokuapp.com/api/recipe-ingredients';
   constructor(private httpClient: HttpClient) { }
 
   searchIngredients(keyword: string): Observable<GetResponseRecipeIngredients> {

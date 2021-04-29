@@ -5,7 +5,7 @@
       <input
         class="form-control mr-sm-2"
         #searchInput
-        (keyup.enter)="(searchInput.value)"
+        (keyup.enter)="searchRecipes(searchInput.value, filtr.value)"
         type="text"
         placeholder="Szukaj"
         aria-label="Search"
@@ -14,10 +14,21 @@
       <button class="searchButton"
         class="btn btn-outline-success btn-rounded btn-sm my-0"
         type="submit"
-        (click)="searchRecipes(searchInput.value)"
+        (click)="searchRecipes(searchInput.value, filtr.value)"
       >
         <i class="fas fa-search"></i>
       </button>
+      <div class="input-group filtr">
+        <div class="input-group-prepend my-0">
+          <label class="input-group-text my-0" for="filtr">Filtr</label>
+        </div>
+        <select class="custom-select my-0" id="filtr" #filtr>
+          <option selected>Brak</option>
+          <option value="1">Przepisy łatwe</option>
+          <option value="2">Przepisy średnie</option>
+          <option value="3">Przepisy trudne</option>
+        </select>
+      </div>
     </form>
   </div>
 </div>

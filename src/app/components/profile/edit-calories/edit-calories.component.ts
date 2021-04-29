@@ -58,6 +58,7 @@ export class EditCaloriesComponent implements OnInit {
     if (this.currentUser) {
       this.checkAuthor();
     }
+    this.caloriesChange(this.form.calories);
   }
 
   checkAuthor(): void {
@@ -72,7 +73,6 @@ export class EditCaloriesComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.calProc);
     const regex = new RegExp(/^\d*$/);
     if (!regex.test(this.form.calories) && this.form.calories !== null) {
       this.form.calories.invalid = true;
@@ -88,7 +88,7 @@ export class EditCaloriesComponent implements OnInit {
       this.form.proteins.errors.pattern = true;
     } else if (this.calProc !== 100 && this.form.calories !== null && this.form.fat && this.form.carbohydrates && this.form.proteins) {
       this.proc = true;
-    } else if (this.form.calories < 1000) {
+    } else if (this.form.calories < 1000 && this.form.calories !== null) {
     } else {
       const id: number = +this._activatedRoute.snapshot.paramMap.get('id');
       // tslint:disable-next-line: deprecation
@@ -189,7 +189,7 @@ export class EditCaloriesComponent implements OnInit {
   // tslint:disable-next-line: typedef
   minusPercentP() {
     this.subtrahend = Math.round((this.form.calories / 4) / 100);
-    this.form.proteins -= this.addend;
+    this.form.proteins -= this.subtrahend;
     this.caloriesChange(this.form.calories);
   }
 
@@ -203,7 +203,7 @@ export class EditCaloriesComponent implements OnInit {
   // tslint:disable-next-line: typedef
   minusPercentW() {
     this.subtrahend = Math.round((this.form.calories / 4) / 100);
-    this.form.carbohydrates -= this.addend;
+    this.form.carbohydrates -= this.subtrahend;
     this.caloriesChange(this.form.calories);
   }
 
@@ -217,7 +217,7 @@ export class EditCaloriesComponent implements OnInit {
   // tslint:disable-next-line: typedef
   minusPercentF() {
     this.subtrahend = Math.round((this.form.calories / 9) / 100);
-    this.form.fat -= this.addend;
+    this.form.fat -= this.subtrahend;
     this.caloriesChange(this.form.calories);
   }
 }

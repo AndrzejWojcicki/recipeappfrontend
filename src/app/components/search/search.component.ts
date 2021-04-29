@@ -15,14 +15,18 @@ export class SearchComponent implements OnInit {
   }
 
   // tslint:disable-next-line: typedef
-  searchRecipes(keyword: string) {
+  searchRecipes(keyword: string, filtr: any) {
     if (keyword === '') {
-      console.log(keyword);
-      this._router.navigateByUrl('/szukaj/' + keyword + 'null');
-
     } else {
-    console.log(keyword);
-    this._router.navigateByUrl('/szukaj/' + keyword);
+      if (filtr === 'Brak') {
+        this._router.navigateByUrl('/szukaj/' + keyword);
+      } else if (filtr === '1') {
+        this._router.navigateByUrl('/szukaj/' + keyword + '/' + filtr);
+      } else if (filtr === '2') {
+        this._router.navigateByUrl('/szukaj/' + keyword + '/' + filtr);
+      } else if (filtr === '3') {
+        this._router.navigateByUrl('/szukaj/' + keyword + '/' + filtr);
+      }
     }
   }
 }

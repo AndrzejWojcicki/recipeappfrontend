@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class RatingService {
 
-  private ratingUrl = 'http://localhost:8080/api/recipe-ratings/';
-  private crudRatingUrl = 'http://localhost:8080/ratings';
+  private ratingUrl = 'https://spring-recipe-app-backend.herokuapp.com/api/recipe-ratings/';
+  private crudRatingUrl = 'https://spring-recipe-app-backend.herokuapp.com/ratings';
 
   constructor(private httpClient: HttpClient) { }
 
