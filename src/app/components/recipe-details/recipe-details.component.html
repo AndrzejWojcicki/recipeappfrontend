@@ -134,7 +134,9 @@
       </div>
     </div>
     <div class="card card-outline-secondary my-4 text-center" *ngIf="username">
-      <div class="card-header ">Zostaw ocenę</div>
+      <div class="card-header ">
+        <div *ngIf="!rateAdded">Zostaw ocenę</div>
+        <div *ngIf="rateAdded">Twoja ocena</div></div>
       <div class="card-body">
         <pre *ngIf="!rateAdded">Nie dodałeś jeszcze oceny! <br> Wybierz ilość gwiazdek i kliknij dodaj</pre>
         <ngb-rating [(rate)]="currentRate" max="5"></ngb-rating>
